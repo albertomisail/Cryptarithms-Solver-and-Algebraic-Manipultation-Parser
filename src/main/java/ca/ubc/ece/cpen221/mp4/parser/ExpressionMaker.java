@@ -24,8 +24,8 @@ public class ExpressionMaker {
 	 */
 	public Expression createBinaryOperationExpression(BinaryOperator operator, Expression operand1,
 			Expression operand2) {
-		// TODO implement this method
 		return null;
+		
 	}
 
 	/**

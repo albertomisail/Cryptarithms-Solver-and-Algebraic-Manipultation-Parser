@@ -21,6 +21,7 @@ import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
  * Note: YOU SHOULD NOT NEED TO MODIFY THIS CLASS.
  *
  */
+@SuppressWarnings("serial")
 public class Calculator extends JPanel {
 
 	// CHECKSTYLE:OFF
@@ -41,7 +42,7 @@ public class Calculator extends JPanel {
 	 *            a list of operators to be added to the calculator
 	 */
 	public Calculator(List<Operator> supportedOperatorList) {
-		// TODO implement this constructor
+		this.supportedOperatorList = supportedOperatorList;
 	}
 
 	/**

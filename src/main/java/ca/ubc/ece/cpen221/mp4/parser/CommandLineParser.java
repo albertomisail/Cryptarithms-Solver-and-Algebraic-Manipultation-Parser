@@ -27,8 +27,6 @@ public class CommandLineParser {
 
 		Set<Operator> operatorSet = new HashSet<Operator>();
 
-		// TODO add operators to operatorSet
-
 		ExpressionParser parser = new ExpressionParser(operatorSet, new ExpressionMaker());
 
 		Scanner scanner = new Scanner(System.in);
@@ -42,7 +40,6 @@ public class CommandLineParser {
 				System.out.println("Input format not accepted. Please try again.");
 			}
 		} while (true);
-
 	}
 
 }
