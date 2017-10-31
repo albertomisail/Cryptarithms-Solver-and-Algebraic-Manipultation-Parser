@@ -1,14 +1,14 @@
 package ca.ubc.ece.cpen221.mp4.operator;
 
-public class AbsoluteValue {
-	private final double arg1;
-	
-	public AbsoluteValue(double arg1) {
-		this.arg1 = arg1;
-	}
+public class AbsoluteValue implements UnaryOperator{
+	private double arg1;
 	
 	public double apply(double a) {
 		return Math.abs(a);
+	}
+	
+	public void setArg1(double a) {
+		this.arg1 = a;
 	}
 
 	public double getArg1() {

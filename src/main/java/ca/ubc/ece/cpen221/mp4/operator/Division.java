@@ -1,6 +1,6 @@
 package ca.ubc.ece.cpen221.mp4.operator;
 
-public class Division {
+public class Division implements BinaryOperator{
 	private final double arg1;
 	private final double arg2;
 	

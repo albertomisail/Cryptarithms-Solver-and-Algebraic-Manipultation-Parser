@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import ca.ubc.ece.cpen221.mp4.operator.AbsoluteValue;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 
 /**
@@ -23,7 +24,8 @@ public class Main {
 	}
 	
 	private static void createAndShowSetupScreen() {
-		List<Operator> operators = new ArrayList<>();		
+		List<Operator> operators = new ArrayList<>();
+		operators.add(new AbsoluteValue());
 		Calculator calculator = new Calculator(operators);
 		calculator.launch();
 	}
