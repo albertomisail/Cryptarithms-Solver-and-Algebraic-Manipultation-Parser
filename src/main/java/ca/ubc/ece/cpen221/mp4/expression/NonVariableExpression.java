@@ -4,7 +4,7 @@ import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 
 public class NonVariableExpression implements Expression{
-	private String name;
+	private final String name;
 	private double value;
 	
 	private UnaryOperator uniOperator;
@@ -13,14 +13,14 @@ public class NonVariableExpression implements Expression{
 	private Expression expRight;
 	
 	public NonVariableExpression(BinaryOperator operator, Expression operand1, Expression operand2) {
-		this.name = operand1.toString() + operator.toString() + operand2.toString();
+		this.name = "(" + operand1.toString() + operator.toString() + operand2.toString() + ")";
 		this.expLeft = operand1;
 		this.expRight = operand2;
 		this.binOperator = operator;
 	}
 	
 	public NonVariableExpression(UnaryOperator operator, Expression operand) {
-		this.name = operator.toString() + operand.toString();
+		this.name = "(" + operator.toString() + operand.toString() + ")";
 		this.uniOperator = operator;
 		this.expLeft = operand;
 	}
@@ -46,8 +46,7 @@ public class NonVariableExpression implements Expression{
 
 	@Override
 	public String toString() {
-		// TODO implement this method
-		return this.name; // change this
+		return this.name;
 	}
 
 	/**
@@ -57,7 +56,6 @@ public class NonVariableExpression implements Expression{
 	 *            the new value of this variable
 	 */
 	public void store(double value) {
-		// TODO implement this method
 		this.value = value;
 	}
 
