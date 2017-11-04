@@ -1,5 +1,8 @@
 package ca.ubc.ece.cpen221.mp4.expression;
 
+import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
+import ca.ubc.ece.cpen221.mp4.operator.Operator;
+
 /**
  * An expression that represents a variable. Its value may be set as well as
  * read. Unlike other expressions in this assignment, variables are mutable.
@@ -16,8 +19,10 @@ public class VariableExpression implements Expression {
 
 	private String name;
 	private double value;
+	
 	private Expression expLeft;
 	private Expression expRight;
+	
 
 	/**
 	 * Constructs a variable with the specified name, whose initial value is
@@ -35,7 +40,6 @@ public class VariableExpression implements Expression {
 	public double eval() {
 		// TODO implement this method
 		
-		return -1; // change this
 	}
 
 	@Override
