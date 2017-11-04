@@ -5,7 +5,8 @@ package ca.ubc.ece.cpen221.mp4.expression;
  *
  */
 public class DerivativeExpression implements Expression {
-		
+	
+	
 	/**
 	 * Create an expression representing the derivative of the specified
 	 * function with respect to the specified variable.
@@ -22,6 +23,7 @@ public class DerivativeExpression implements Expression {
 	@Override
 	public double eval() {
 		// TODO implement this method
+		
 		return 0; // change this
 	}
 	
