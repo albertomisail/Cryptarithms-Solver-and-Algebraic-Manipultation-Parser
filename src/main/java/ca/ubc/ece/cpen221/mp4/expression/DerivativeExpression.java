@@ -33,6 +33,8 @@ public class DerivativeExpression implements Expression {
 		double fx = fn.eval();
 		independentVar.store(independentVar.eval()+DELTA_X);
 		double fxh = fn.eval();
+		//restores original variable value
+		independentVar.store(independentVar.eval() - DELTA_X);
 		return (fxh - fx)/DELTA_X;
 		
 	}
@@ -50,18 +52,5 @@ public class DerivativeExpression implements Expression {
 		System.out.println("Values are:" + d1.eval() + " " + d3.eval() + " " );
 	
 	}
-	
-	/**
-	* Returns a zero of the specified function using
-	* Newton’s method with approxZero as the initial estimate.
-	*
-	* @param fn the function whose zero is to be found
-	* @param x the independent variable of the function
-	* @param approxZero initial approximation for the
-	* zero of the function
-	* @param tolerance how close zero the returned
-	* zero has to be
-	*/
-	
 
 }
