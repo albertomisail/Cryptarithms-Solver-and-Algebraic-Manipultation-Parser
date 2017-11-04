@@ -64,7 +64,7 @@ public class VariableExpression implements Expression {
 	 * @return the value to which this expression evaluates
 	 */
 	public double eval() {
-<<<<<<< HEAD
+
 		// TODO implement this method
 		if(this.expLeft==null) {
 			return this.value;
@@ -75,9 +75,6 @@ public class VariableExpression implements Expression {
 		else {
 			return this.binOperator.apply(this.expLeft.eval(), this.expRight.eval());
 		}
-=======
-		return value;
->>>>>>> b4a1e4c26c8b123fb9e914df76f6ef8e56886cd3
 	}
 
 	@Override
