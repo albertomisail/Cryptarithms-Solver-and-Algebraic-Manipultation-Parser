@@ -7,13 +7,16 @@ public class NewtonsMethod {
 	public static double NewtonsMethod(Expression fn, VariableExpression x, double approxZero, double tolerance) {
 		double initialxval = x.eval();
 		double betterAprox = approxZero;
-		do {
-			x.store(betterAprox);
+		x.store(betterAprox);
+		while(Math.abs(fn.eval())>Math.abs(tolerance)) {
+			
 			double f = fn.eval();
 			Expression derivative = new DerivativeExpression(fn, x);
 			double fprime = derivative.eval();
 			betterAprox = betterAprox - f*fprime;
-		}while(Math.abs(betterAprox)<=Math.abs(tolerance));
+			x.store(betterAprox);
+			System.out.println("here");
+		}
 		x.store(initialxval);
 		return betterAprox;
 	}
@@ -24,7 +27,9 @@ public class NewtonsMethod {
 		
 		Expression f1 = new NonVariableExpression(new Addition(), x, y);
 		Expression f2 = new NonVariableExpression(new Multiplication(), x, x);
+		double a = NewtonsMethod(f1, x, 5, 0.0001 );
+		double b = NewtonsMethod(f2, x, 0.5, 0.0001);
 		
-		System.out.println("Approximations are:" + NewtonsMethod(f1, x, 5, 0.0001 ) + " " + NewtonsMethod(f2, x, 3, 0.0001) + " " );
+		System.out.println("Approximations are:" + NewtonsMethod(f1, x, 5, 0.0001 ) + " " + NewtonsMethod(f2, x, 0.5, 0.0001) + " " );
 	}
 }
