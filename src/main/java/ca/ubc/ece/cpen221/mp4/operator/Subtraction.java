@@ -5,6 +5,6 @@ public class Subtraction implements BinaryOperator{
 		return a - b;
 	}
 	public String toString() {
-		return " - ";
+		return "-";
 	}
 }

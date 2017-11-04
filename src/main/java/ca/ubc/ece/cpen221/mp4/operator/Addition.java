@@ -7,6 +7,6 @@ public class Addition implements BinaryOperator{
 	}
 	
 	public String toString() {
-		return " + ";
+		return "+";
 	}
 }

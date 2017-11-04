@@ -7,6 +7,6 @@ public class Division implements BinaryOperator{
 	}
 	
 	public String toString() {
-		return " / ";
+		return "/";
 	}
 }

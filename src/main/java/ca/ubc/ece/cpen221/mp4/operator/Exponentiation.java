@@ -5,6 +5,6 @@ public class Exponentiation implements BinaryOperator {
 		return Math.pow(a, b);
 	}
 	public String toString() {
-		return " ^ ";
+		return "^";
 	}
 }

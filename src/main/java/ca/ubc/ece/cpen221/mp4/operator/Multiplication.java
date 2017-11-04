@@ -6,6 +6,6 @@ public class Multiplication implements BinaryOperator{
 	}
 	
 	public String toString() {
-		return " * ";
+		return "*";
 	}
 }

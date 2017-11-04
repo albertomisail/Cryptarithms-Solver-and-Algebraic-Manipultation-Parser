@@ -6,6 +6,6 @@ public class AbsoluteValue implements UnaryOperator{
 	}
 	
 	public String toString() {
-		return "|x|";
+		return "abs";
 	}
 }

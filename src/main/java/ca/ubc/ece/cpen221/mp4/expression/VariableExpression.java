@@ -16,6 +16,8 @@ public class VariableExpression implements Expression {
 
 	private String name;
 	private double value;
+	private Expression expLeft;
+	private Expression expRight;
 
 	/**
 	 * Constructs a variable with the specified name, whose initial value is
@@ -26,18 +28,20 @@ public class VariableExpression implements Expression {
 	 */
 	public VariableExpression(String name) {
 		// TODO Implement this constructor
+		this.name = name;
 	}
 
 	@Override
 	public double eval() {
 		// TODO implement this method
+		
 		return -1; // change this
 	}
 
 	@Override
 	public String toString() {
 		// TODO implement this method
-		return null; // change this
+		return this.name; // change this
 	}
 
 	/**
@@ -48,6 +52,7 @@ public class VariableExpression implements Expression {
 	 */
 	public void store(double value) {
 		// TODO implement this method
+		this.value = value;
 	}
 
 	/**
