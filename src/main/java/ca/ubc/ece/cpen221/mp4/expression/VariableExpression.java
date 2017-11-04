@@ -20,15 +20,13 @@ import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
  */
 public class VariableExpression implements Expression {
 
-	private String name;
+	private final String name;
 	private double value;
 	
 	private UnaryOperator uniOperator;
 	private BinaryOperator binOperator;
 	private Expression expLeft;
 	private Expression expRight;
-	
-	
 
 	/**
 	 * Constructs a variable with the specified name, whose initial value is
@@ -38,7 +36,6 @@ public class VariableExpression implements Expression {
 	 *            the name of the variable
 	 */
 	public VariableExpression(String name) {
-		// TODO Implement this constructor
 		this.name = name;
 	}
 	
@@ -61,7 +58,13 @@ public class VariableExpression implements Expression {
 	}
 	
 	@Override
+	/**
+	 * Evaluates an arithmetic expression.
+	 * 
+	 * @return the value to which this expression evaluates
+	 */
 	public double eval() {
+<<<<<<< HEAD
 		// TODO implement this method
 		if(this.expLeft==null) {
 			return this.value;
@@ -72,12 +75,14 @@ public class VariableExpression implements Expression {
 		else {
 			return this.binOperator.apply(this.expLeft.eval(), this.expRight.eval());
 		}
+=======
+		return value;
+>>>>>>> b4a1e4c26c8b123fb9e914df76f6ef8e56886cd3
 	}
 
 	@Override
 	public String toString() {
-		// TODO implement this method
-		return this.name; // change this
+		return "(" + name + ")"; 
 	}
 
 	/**
@@ -87,7 +92,6 @@ public class VariableExpression implements Expression {
 	 *            the new value of this variable
 	 */
 	public void store(double value) {
-		// TODO implement this method
 		this.value = value;
 	}
 
