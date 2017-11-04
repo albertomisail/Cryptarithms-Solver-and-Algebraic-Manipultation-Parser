@@ -61,5 +61,10 @@ public class ExpressionMaker {
 		//Expression result = new VariableExpression(value);
 		return result;
 	}
+	
+	public Expression createVariableExpression(String name) {
+		Expression result = new VariableExpression(name);
+		return result;
+	}
 
 }
