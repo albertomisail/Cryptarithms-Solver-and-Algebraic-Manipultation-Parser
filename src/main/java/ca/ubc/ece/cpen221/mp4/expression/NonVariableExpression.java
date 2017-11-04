@@ -47,7 +47,7 @@ public class NonVariableExpression implements Expression{
 	@Override
 	public String toString() {
 		// TODO implement this method
-		return this.name; // change this
+		return this.name;
 	}
 
 	/**

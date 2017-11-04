@@ -50,7 +50,6 @@ public class CommandLineParser {
 			System.out.println("Enter an expression");
 			String expression = scanner.nextLine();
 			try {
-				
 				Expression exp = parser.parse(expression);
 				System.out.println("Result: " + exp.eval());
 			} catch (Exception e) {
