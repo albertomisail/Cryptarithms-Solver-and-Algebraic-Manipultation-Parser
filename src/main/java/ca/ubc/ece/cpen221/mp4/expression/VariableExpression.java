@@ -17,13 +17,9 @@ import ca.ubc.ece.cpen221.mp4.operator.Operator;
  */
 public class VariableExpression implements Expression {
 
-	private String name;
+	private final String name;
 	private double value;
 	
-	private Expression expLeft;
-	private Expression expRight;
-	
-
 	/**
 	 * Constructs a variable with the specified name, whose initial value is
 	 * zero.
@@ -32,20 +28,22 @@ public class VariableExpression implements Expression {
 	 *            the name of the variable
 	 */
 	public VariableExpression(String name) {
-		// TODO Implement this constructor
 		this.name = name;
 	}
 
 	@Override
+	/**
+	 * Evaluates an arithmetic expression.
+	 * 
+	 * @return the value to which this expression evaluates
+	 */
 	public double eval() {
-		// TODO implement this method
-		
+		return value;
 	}
 
 	@Override
 	public String toString() {
-		// TODO implement this method
-		return this.name; // change this
+		return "(" + name + ")"; 
 	}
 
 	/**
@@ -55,7 +53,6 @@ public class VariableExpression implements Expression {
 	 *            the new value of this variable
 	 */
 	public void store(double value) {
-		// TODO implement this method
 		this.value = value;
 	}
 

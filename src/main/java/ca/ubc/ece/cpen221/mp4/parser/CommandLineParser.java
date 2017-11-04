@@ -44,6 +44,7 @@ public class CommandLineParser {
 		
 		ExpressionParser parser = new ExpressionParser(operatorSet, new ExpressionMaker());
 
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		do {
 			System.out.println("Enter an expression");
