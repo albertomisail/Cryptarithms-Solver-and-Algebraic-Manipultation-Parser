@@ -6,7 +6,7 @@ package ca.ubc.ece.cpen221.mp4.permutation;
  * @param <T>
  *            generic Array
  */
-public interface AbstractPermutation<T> {
+public interface AbstractPermutation<String> {
 
 	// Here T denotes the type of values in the array that we want to permute
 	// We are using Java Generics
@@ -19,6 +19,6 @@ public interface AbstractPermutation<T> {
 	 * 
 	 * @return one generic Array of permutation.
 	 */
-	T[] getOnePermutation();
+	int[] getOnePermutation();
 
 }
