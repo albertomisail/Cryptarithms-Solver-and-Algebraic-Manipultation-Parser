@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class Cryptarithm {
 	 */
 	// ** CAN WE ASSUME THAT THEY PASS A VALID CRYPTARITHM?
 	public Cryptarithm(String[] cryptarithm) {
+		letters = new ArrayList<VariableExpression>();
 		NonVariableExpression word;
 		BinaryOperator op = null;
 
@@ -43,6 +45,7 @@ public class Cryptarithm {
 				op = (OperationConstructor(cryptarithm[i]));
 			}
 		}
+		op = null;
 		for (int i = cryptarithm.length - 1; cryptarithm[i] != "="; i--) {
 			if (i % 2 == 0) {
 				word = WordConstructor(cryptarithm[i]);
@@ -106,6 +109,8 @@ public class Cryptarithm {
 			if (!letters.contains(letter)) {
 				letters.add(letter);
 			}
+			//bug: *currently every letter in the same word has the same magnitude*
+			//need to make a new copy of magnitude somehow... and use it for each parsedLetter
 			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
 
 			if (parsedWord == null) {
@@ -115,6 +120,13 @@ public class Cryptarithm {
 			}
 		}
 		return parsedWord;
+	}
+	
+	//test constructor
+	public static void main(String[] args) {
+		String[] crypto = {"SEND", "+", "MORE", "=" ,"MONEY"};
+		@SuppressWarnings("unused")
+		Cryptarithm parsedCrypto = new Cryptarithm(crypto);
 	}
 
 	/**
