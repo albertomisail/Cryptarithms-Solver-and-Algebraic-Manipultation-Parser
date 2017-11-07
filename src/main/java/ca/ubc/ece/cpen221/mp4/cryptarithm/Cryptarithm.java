@@ -9,7 +9,6 @@ import ca.ubc.ece.cpen221.mp4.operator.Addition;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Division;
 import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
-import ca.ubc.ece.cpen221.mp4.operator.Operator;
 import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
 
 /**
@@ -20,7 +19,7 @@ public class Cryptarithm {
 	private NonVariableExpression lhs;
 	private NonVariableExpression rhs;
 	private List<VariableExpression> letters;
-	
+
 	/**
 	 * Cryptarithm constructor
 	 * 
@@ -31,49 +30,38 @@ public class Cryptarithm {
 	// ** CAN WE ASSUME THAT THEY PASS A VALID CRYPTARITHM?
 	public Cryptarithm(String[] cryptarithm) {
 		NonVariableExpression word;
-		VariableExpression letter;
-		VariableExpression magnitude = new VariableExpression("mag");
 		BinaryOperator op = null;
 
 		for (int i = 0; cryptarithm[i] != "="; i++) {
-			if (i%2 == 0) {
+			if (i % 2 == 0) {
 				word = WordConstructor(cryptarithm[i]);
 				if (op == null)
 					lhs = word;
 				else
 					lhs = new NonVariableExpression(op, lhs, word);
-		} else {
-			op = (OperationConstructor(cryptarithm[i]));
-		}
-			}
-			if (i % 2 == 1) {
-				int iterator = cryptarithm[i].length() - 1;
-				for (char c : cryptarithm[i].toCharArray()) {
-					magnitude.store(Math.pow(10, iterator--));
-					letter = new VariableExpression(String.valueOf(c));
-
-					if (!letters.contains(letter)) {
-						letters.add(letter);
-					}
-					word = new NonVariableExpression(new Multiplication(), letter, magnitude);
-
-					if (op == null)
-						lhs = word;
-					else
-						lhs = new NonVariableExpression(op, lhs, word);
-				}
 			} else {
 				op = (OperationConstructor(cryptarithm[i]));
 			}
 		}
-
 		for (int i = cryptarithm.length - 1; cryptarithm[i] != "="; i--) {
-
+			if (i % 2 == 0) {
+				word = WordConstructor(cryptarithm[i]);
+				if (op == null)
+					rhs = word;
+				else
+					rhs = new NonVariableExpression(op, rhs, word);
+			} else {
+				op = (OperationConstructor(cryptarithm[i]));
+			}
 		}
 	}
 
-	/** PARSES OPERATORS
+	/**
+	 * PARSES OPERATORS
 	 * 
+	 * @param s
+	 *            a String representing a valid operator, +, -, *, \
+	 * @return A BinaryOperator represented by the string
 	 */
 	private BinaryOperator OperationConstructor(String s) {
 		BinaryOperator op = null;
@@ -96,37 +84,38 @@ public class Cryptarithm {
 		return op;
 	}
 
-	/** PARSES WORDS
+	/**
+	 * PARSES WORDS
 	 * 
+	 * @param word
+	 *            the word to parse
+	 * @return a NonVariableExpression representing the word
 	 */
 	private NonVariableExpression WordConstructor(String word) {
 		VariableExpression letter;
 		VariableExpression magnitude = new VariableExpression("magnitude");
-		BinaryOperator op = null;
 		NonVariableExpression parsedLetter;
 		NonVariableExpression parsedWord = null;
-		
+
 		int iterator = word.length() - 1;
-		
+
 		for (char c : word.toCharArray()) {
-			
+
 			magnitude.store(Math.pow(10, iterator--));
 			letter = new VariableExpression(String.valueOf(c));
 			if (!letters.contains(letter)) {
-					letters.add(letter);
-				}
-			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
-			
-			if(parsedWord==null) {
-				parsedWord = parsedLetter;
+				letters.add(letter);
 			}
-			else {
+			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
+
+			if (parsedWord == null) {
+				parsedWord = parsedLetter;
+			} else {
 				parsedWord = new NonVariableExpression(new Addition(), parsedWord, parsedLetter);
 			}
 		}
 		return parsedWord;
 	}
-
 
 	/**
 	 * Find solutions to the cryptarithm
