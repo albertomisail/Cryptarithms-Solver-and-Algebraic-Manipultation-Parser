@@ -20,63 +20,7 @@ public class Cryptarithm {
 	private NonVariableExpression lhs;
 	private NonVariableExpression rhs;
 	private List<VariableExpression> letters;
-
-	/**
-	 * 
-	 */
-	private BinaryOperator OperationConstructor(String s) {
-		BinaryOperator op = null;
-		switch (s) {
-		case "+":
-			op = new Addition();
-			break;
-		case "-":
-			op = new Subtraction();
-			break;
-		case "*":
-			op = new Multiplication();
-			break;
-		case "/":
-			op = new Division();
-			break;
-		// can use if we want to check for invalid operations
-		// default: throw new NoSolutionException();
-		}
-		return op;
-	}
-
-	/**
-	 * 
-	 */
-	private NonVariableExpression WordConstructor(String word, int i) {
-		VariableExpression letter;
-		VariableExpression magnitude = new VariableExpression("magnitude");
-		BinaryOperator op = null;
-		NonVariableExpression parsedWord = null;
-
-		if (i % 2 == 1) {
-			int iterator = word.length() - 1;
-			for (char c : word.toCharArray()) {
-				magnitude.store(Math.pow(10, iterator--));
-				letter = new VariableExpression(String.valueOf(c));
-
-				if (!letters.contains(letter)) {
-					letters.add(letter);
-				}
-				parsedWord = new NonVariableExpression(new Multiplication(), letter, magnitude);
-
-				if (op == null)
-					lhs = parsedWord;
-				else
-					lhs = new NonVariableExpression(op, lhs, parsedWord);
-			}
-		} else {
-			op = (OperationConstructor(word));
-		}
-		return parsedWord;
-
-	}
-
+	
 	/**
 	 * Cryptarithm constructor
 	 * 
@@ -92,6 +36,16 @@ public class Cryptarithm {
 		BinaryOperator op = null;
 
 		for (int i = 0; cryptarithm[i] != "="; i++) {
+			if (i%2 == 0) {
+				word = WordConstructor(cryptarithm[i]);
+				if (op == null)
+					lhs = word;
+				else
+					lhs = new NonVariableExpression(op, lhs, word);
+		} else {
+			op = (OperationConstructor(cryptarithm[i]));
+		}
+			}
 			if (i % 2 == 1) {
 				int iterator = cryptarithm[i].length() - 1;
 				for (char c : cryptarithm[i].toCharArray()) {
@@ -117,6 +71,62 @@ public class Cryptarithm {
 
 		}
 	}
+
+	/** PARSES OPERATORS
+	 * 
+	 */
+	private BinaryOperator OperationConstructor(String s) {
+		BinaryOperator op = null;
+		switch (s) {
+		case "+":
+			op = new Addition();
+			break;
+		case "-":
+			op = new Subtraction();
+			break;
+		case "*":
+			op = new Multiplication();
+			break;
+		case "/":
+			op = new Division();
+			break;
+		// can use if we want to check for invalid operations
+		// default: throw new NoSolutionException();
+		}
+		return op;
+	}
+
+	/** PARSES WORDS
+	 * 
+	 */
+	private NonVariableExpression WordConstructor(String word) {
+		VariableExpression letter;
+		VariableExpression magnitude = new VariableExpression("magnitude");
+		BinaryOperator op = null;
+		NonVariableExpression parsedLetter;
+		NonVariableExpression parsedWord = null;
+		
+		int iterator = word.length() - 1;
+		
+		for (char c : word.toCharArray()) {
+			
+			magnitude.store(Math.pow(10, iterator--));
+			letter = new VariableExpression(String.valueOf(c));
+			if (!letters.contains(letter)) {
+					letters.add(letter);
+				}
+			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
+			
+			if(parsedWord==null) {
+				parsedWord = parsedLetter;
+			}
+			else {
+				parsedWord = new NonVariableExpression(new Addition(), parsedWord, parsedLetter);
+			}
+		}
+		return parsedWord;
+	}
+
 
 	/**
 	 * Find solutions to the cryptarithm
