@@ -2,6 +2,7 @@ package ca.ubc.ece.cpen221.mp4.expression;
 
 import java.util.Stack;
 
+
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Operator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
@@ -86,7 +87,7 @@ public class VariableExpression implements Expression {
 
 	@Override
 	public String toString() {
-		return "(" + name + ")"; 
+		return name; 
 	}
 
 	/**
@@ -106,5 +107,17 @@ public class VariableExpression implements Expression {
 	 */
 	public String name() {
 		return name;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof VariableExpression)) {
+			return false;
+		}
+		VariableExpression other = (VariableExpression) obj;
+		return this.name().equals(other.name());
 	}
 }

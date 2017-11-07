@@ -27,6 +27,10 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		this.generateAllPermutations(elementsArray.length);
 	}
 	
+	public int getNumberOfPerms() {
+		return numberOfPerms;
+	}
+	
 	private void generateAllPermutations(int counter) {
 		if(counter == 1) {
 			@SuppressWarnings("unchecked")
@@ -34,7 +38,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 			copyArray(elementsArray, auxiliary);
 			this.allPermutations.add(auxiliary);
 			this.numberOfPerms++;
-			printArr(auxiliary);
+			//printArr(auxiliary);
 		}
 		
 		for(int i = 0; i < counter; i++) {
@@ -61,27 +65,18 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	@Override
 	public T[] getOnePermutation() {
 		this.counter++;
-		printArr(this.allPermutations.get(counter%this.numberOfPerms));
+		//printArr(this.allPermutations.get(counter%this.numberOfPerms));
 		return this.allPermutations.get(counter%this.numberOfPerms);
 	}
 	
-	public void printArr(T[] arr) {
+	/*public void printArr(T[] arr) {
 		for(int i = 0; i < arr.length; i++) {
 			System.out.print(arr[i]+" ");
 		}
 		System.out.println("");
-	}
+	}*/
 	
-	public static void main(String[] args) {
-		Integer[] arr = {0, 1,2};
-		Permutation<Integer> perms = new Permutation<Integer>(arr);
-		System.out.println("done with all the perms :)");
-		for(int i = 0; i < 12; i++) {
-			perms.getOnePermutation();
-		}
-		String[] arr2 = {"ab","cd","ef"};
-		Permutation<String> perms2 = new Permutation<String>(arr2);
-	}
+	
 	
 	
 	/*private int iterator = 0;
