@@ -33,20 +33,22 @@ import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
  *
  */
 public class Cryptarithm {
-	
-	private Map<Character, VariableExpression> variableExpressions;
-	private Map<Integer, VariableExpression> variables;
-	private List<WordExpression> wordsLeft;
-	private List<WordExpression> wordsRight;
-	private List<String> operatorsLeft;
-	private List<String> operatorsRight;
-
-	private static final Set<String> operators = new LinkedHashSet<String>(Arrays.asList("+", "-", "*", "/"));
+	/*
+	 * private Map<Character, VariableExpression> variableExpressions; private
+	 * Map<Integer, VariableExpression> variables; private List<WordExpression>
+	 * wordsLeft; private List<WordExpression> wordsRight; private List<String>
+	 * operatorsLeft; private List<String> operatorsRight;
+	 * 
+	 * private static final Set<String> operators = new
+	 * LinkedHashSet<String>(Arrays.asList("+", "-", "*", "/"));
+	 */
 	private static final Set<Integer> digits = new LinkedHashSet<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-	
+
+	// left hand side and right hand side of the expression
 	private NonVariableExpression lhs;
 	private NonVariableExpression rhs;
 	private List<VariableExpression> letters;
+	private List<VariableExpression> firstLetters;
 
 	/**
 	 * Cryptarithm constructor
@@ -57,55 +59,32 @@ public class Cryptarithm {
 	 */
 	// ** CAN WE ASSUME THAT THEY PASS A VALID CRYPTARITHM?
 	public Cryptarithm(String[] cryptarithm) {
-//<<<<<<< HEAD
-		// TODO implement this constructor
-		this.operatorsLeft = new ArrayList<String>();
-		this.operatorsRight = new ArrayList<String>();
-		this.wordsLeft = new ArrayList<WordExpression>();
-		this.wordsRight = new ArrayList<WordExpression>();
-		this.variables = new LinkedHashMap<Integer, VariableExpression>();
-		this.variableExpressions = new LinkedHashMap<Character, VariableExpression>();
-
-		boolean equals = false;
-		for (String word : cryptarithm) {
-			if (word.equals("=")) {
-				equals = true;
-			} else {
-				if (equals) {
-					//TODO
-					//change to mod 2 thin
-					if (operators.contains(word)) {
-						operatorsRight.add(word);
-					} else {
-						// wordsRight.add(word);
-						for (int i = 0; i < word.length(); i++) {
-							VariableExpression variable = new VariableExpression(word.charAt(i) + "");
-							if (!variables.containsValue(variable)) {
-								variables.put(variables.size(), variable);
-								variableExpressions.put(word.charAt(i), variable);
-							}
-						}
-						wordsRight.add(new WordExpression(word, variableExpressions));
-					}
-				} else {
-					if (operators.contains(word)) {
-						operatorsLeft.add(word);
-					} else {
-						// wordsLeft.add(word);
-						for (int i = 0; i < word.length(); i++) {
-							VariableExpression variable = new VariableExpression(word.charAt(i) + "");
-							if (!variables.containsValue(variable)) {
-								variables.put(variables.size(), variable);
-								variableExpressions.put(word.charAt(i), variable);
-							}
-						}
-						wordsRight.add(new WordExpression(word, variableExpressions));
-					}
-				}
-			}
-		}
-//=======
+		/*
+		 * //<<<<<<< HEAD // TODO implement this constructor this.operatorsLeft = new
+		 * ArrayList<String>(); this.operatorsRight = new ArrayList<String>();
+		 * this.wordsLeft = new ArrayList<WordExpression>(); this.wordsRight = new
+		 * ArrayList<WordExpression>(); this.variables = new LinkedHashMap<Integer,
+		 * VariableExpression>(); this.variableExpressions = new
+		 * LinkedHashMap<Character, VariableExpression>();
+		 * 
+		 * boolean equals = false; for (String word : cryptarithm) { if
+		 * (word.equals("=")) { equals = true; } else { if (equals) { //TODO //change to
+		 * mod 2 thin if (operators.contains(word)) { operatorsRight.add(word); } else {
+		 * // wordsRight.add(word); for (int i = 0; i < word.length(); i++) {
+		 * VariableExpression variable = new VariableExpression(word.charAt(i) + ""); if
+		 * (!variables.containsValue(variable)) { variables.put(variables.size(),
+		 * variable); variableExpressions.put(word.charAt(i), variable); } }
+		 * wordsRight.add(new WordExpression(word, variableExpressions)); } } else { if
+		 * (operators.contains(word)) { operatorsLeft.add(word); } else { //
+		 * wordsLeft.add(word); for (int i = 0; i < word.length(); i++) {
+		 * VariableExpression variable = new VariableExpression(word.charAt(i) + ""); if
+		 * (!variables.containsValue(variable)) { variables.put(variables.size(),
+		 * variable); variableExpressions.put(word.charAt(i), variable); } }
+		 * wordsRight.add(new WordExpression(word, variableExpressions)); } } } }
+		 * //=======
+		 */
 		letters = new ArrayList<VariableExpression>();
+		firstLetters = new ArrayList<VariableExpression>();
 		NonVariableExpression word;
 		BinaryOperator op = null;
 
@@ -132,6 +111,7 @@ public class Cryptarithm {
 				op = (OperationConstructor(cryptarithm[i]));
 			}
 		}
+		System.out.println("askldfj");
 	}
 
 	/**
@@ -170,22 +150,29 @@ public class Cryptarithm {
 	 * @return a NonVariableExpression representing the word
 	 */
 	private NonVariableExpression WordConstructor(String word) {
-		VariableExpression letter;
-		VariableExpression magnitude = new VariableExpression("magnitude");
+		// VariableExpression letter;
+		// VariableExpression magnitude = new VariableExpression("magnitude");
 		NonVariableExpression parsedLetter;
 		NonVariableExpression parsedWord = null;
 
 		int iterator = word.length() - 1;
 
 		for (char c : word.toCharArray()) {
-
+			VariableExpression letter = null;
+			VariableExpression magnitude = new VariableExpression("magnitude");
 			magnitude.store(Math.pow(10, iterator--));
-			letter = new VariableExpression(String.valueOf(c));
-			if (!letters.contains(letter)) {
-				letters.add(letter);
+			for (VariableExpression var : letters) {
+				if (var.name().equals("" + c)) {
+					letter = var;
+				}
 			}
-			//bug: *currently every letter in the same word has the same magnitude*
-			//need to make a new copy of magnitude somehow... and use it for each parsedLetter
+			if (letter == null) {
+				letter = new VariableExpression("" + c);
+				letters.add(letter);
+				if (c == word.charAt(0)) {
+					firstLetters.add(letter);
+				}
+			}
 			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
 
 			if (parsedWord == null) {
@@ -194,31 +181,34 @@ public class Cryptarithm {
 				parsedWord = new NonVariableExpression(new Addition(), parsedWord, parsedLetter);
 			}
 		}
+		// FIXED bug: *currently every letter in the same word has the same magnitude*
+		// need to make a new copy of magnitude somehow... and use it for each
+		// parsedLetter
 		return parsedWord;
 	}
-	
-	//test constructor
-	/*public static void main(String[] args) {
-		String[] crypto = {"SEND", "+", "MORE", "=" ,"MONEY"};
-		@SuppressWarnings("unused")
-		Cryptarithm parsedCrypto = new Cryptarithm(crypto);
->>>>>>> 9a7ab7ce4a1a660043c109e9cc2cb6a1d626ca47
-	}
 
-	/**
-	 * Find solutions to the cryptarithm
+	// test constructor
+	public static void main(String[] args) throws NoSolutionException{
+		String[] crypto = { "SEND", "+", "MORE", "=", "MONEY" };
+		Cryptarithm parsedCrypto = new Cryptarithm(crypto);
+		System.out.println(parsedCrypto.solve());
+		String[] cr = {"A" ,"=","A"};
+		Cryptarithm cr1 = new Cryptarithm(cr);
+		System.out.println(cr1.solve());
+	}
+	/*
+	 * 
+	 * /** Find solutions to the cryptarithm
 	 * 
 	 * @return a list of all possible solutions to the given cryptarithm. A solution
-	 *         is a map that provides the value for each alphabet in the
-	 *         cryptarithm.
+	 * is a map that provides the value for each alphabet in the cryptarithm.
 	 */
+
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		// TODO implement this method
 		List<Map<Character, Integer>> result = new ArrayList<Map<Character, Integer>>();
-		/*if (variables.size() > 10) {
-			throw new NoSolutionException();
-		}*/
-		Set<Integer[]> digitSubset = Cryptarithm.generateSubsets(variables.size());
+		
+		Set<Integer[]> digitSubset = Cryptarithm.generateSubsets(letters.size());
 		for (Integer[] subset : digitSubset) {
 			Permutation<Integer> permutation = new Permutation<Integer>(subset);
 			for (int i = 0; i < permutation.getNumberOfPerms(); i++) {
@@ -237,30 +227,28 @@ public class Cryptarithm {
 
 	private void assign(Integer[] arr) {
 		for (int i = 0; i < arr.length; i++) {
-			variables.get(i).store(arr[i]);
+			letters.get(i).store(arr[i]);
 		}
 	}
 
 	public Map<Character, Integer> generateMap(Integer[] values) {
 		Map<Character, Integer> result = new LinkedHashMap<Character, Integer>();
 		for (int i = 0; i < values.length; i++) {
-			Character c = variables.get(i).name().charAt(0);
-			result.put(c, values[i]);
+			result.put(letters.get(i).name().charAt(0), values[i]);
 		}
 		return result;
 	}
 
 	private boolean checkSol() {
-		if(evaluate(wordsLeft, operatorsLeft)==evaluate(wordsRight, operatorsRight)&&noZeroFirst(wordsLeft)&&
-				noZeroFirst(wordsRight)) {
+		if(lhs.eval()==rhs.eval()&&noZero(firstLetters)) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean noZeroFirst(List<WordExpression> words) {
-		for(WordExpression word : words) {
-			if(word.getLetters().get(0).eval()==0) {
+	private boolean noZero(List<VariableExpression> words) {
+		for(VariableExpression var : words) {
+			if(var.eval()==0) {
 				return false;
 			}
 		}
@@ -319,9 +307,7 @@ public class Cryptarithm {
 		System.out.println("");
 	}
 
-	public static void main(String[] args) {
-		
-	}
+	
 
 	// You will need more methods
 }

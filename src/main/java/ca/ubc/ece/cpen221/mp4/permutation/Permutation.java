@@ -77,7 +77,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	}*/
 	
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	
 	
 	/*private int iterator = 0;
@@ -186,7 +186,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		p.heapPermutation(p.getArray(), 2, 3);
 	}*/
 
-=======
+/*=======
 	public static void main(String[] args) {
 		Integer[] arr = {0, 1,2};
 		Permutation<Integer> perms = new Permutation<Integer>(arr);
@@ -197,5 +197,5 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		String[] arr2 = {"ab","cd","ef"};
 		Permutation<String> perms2 = new Permutation<String>(arr2);
 	}
->>>>>>> 9a7ab7ce4a1a660043c109e9cc2cb6a1d626ca47
+>>>>>>> 9a7ab7ce4a1a660043c109e9cc2cb6a1d626ca47*/
 }
