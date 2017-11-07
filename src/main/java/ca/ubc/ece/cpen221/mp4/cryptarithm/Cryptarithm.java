@@ -87,8 +87,9 @@ public class Cryptarithm {
 		firstLetters = new ArrayList<VariableExpression>();
 		NonVariableExpression word;
 		BinaryOperator op = null;
+		int i = 0;
 
-		for (int i = 0; cryptarithm[i] != "="; i++) {
+		for (i = 0; cryptarithm[i] != "="; i++) {
 			if (i % 2 == 0) {
 				word = WordConstructor(cryptarithm[i]);
 				if (op == null)
@@ -100,7 +101,7 @@ public class Cryptarithm {
 			}
 		}
 		op = null;
-		for (int i = cryptarithm.length - 1; cryptarithm[i] != "="; i--) {
+		for (i = i+1 ; i<cryptarithm.length; i++) {
 			if (i % 2 == 0) {
 				word = WordConstructor(cryptarithm[i]);
 				if (op == null)
@@ -164,6 +165,9 @@ public class Cryptarithm {
 			for (VariableExpression var : letters) {
 				if (var.name().equals("" + c)) {
 					letter = var;
+					if (c == word.charAt(0)) {
+						firstLetters.add(letter);
+					}
 				}
 			}
 			if (letter == null) {
@@ -195,6 +199,10 @@ public class Cryptarithm {
 		String[] cr = {"A" ,"=","A"};
 		Cryptarithm cr1 = new Cryptarithm(cr);
 		System.out.println(cr1.solve());
+		String[] x = { "NORTH", "/", "SOUTH", "=", "EAST", "/", "WEST" };
+		Cryptarithm x2 = new Cryptarithm(x);
+		System.out.println(x2.solve());
+		
 	}
 	/*
 	 * 
@@ -240,7 +248,7 @@ public class Cryptarithm {
 	}
 
 	private boolean checkSol() {
-		if(lhs.eval()==rhs.eval()&&noZero(firstLetters)) {
+		if(noZero(firstLetters) && lhs.eval()==rhs.eval()) {
 			return true;
 		}
 		return false;
