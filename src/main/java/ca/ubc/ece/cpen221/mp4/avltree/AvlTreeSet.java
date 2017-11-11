@@ -216,12 +216,12 @@ public class AvlTreeSet {
             if (value == mValue) {
                 return true;
             }
-
-            if (value < mValue) {
+            else if (value < mValue) {
                 return mLeft.contains(value);
             }
-
-            return false;
+            else {
+            	return mRight.contains(value);
+            }
         }
 
         public int getMax() {
