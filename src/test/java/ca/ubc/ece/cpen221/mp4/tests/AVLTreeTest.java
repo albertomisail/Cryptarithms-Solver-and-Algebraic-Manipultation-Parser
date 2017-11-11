@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ca.ubc.ece.cpen221.mp4.avltree.AvlTreeSet;
-import ca.ubc.ece.cpen221.mp4.avltree.AvlTreeSet;
 
 public class AVLTreeTest {
 	@Test

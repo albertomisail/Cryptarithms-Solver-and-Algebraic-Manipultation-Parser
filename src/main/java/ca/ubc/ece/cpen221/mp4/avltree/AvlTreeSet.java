@@ -178,11 +178,9 @@ public class AvlTreeSet {
                 return new Node(mValue, mLeft.insert(value), mRight).balance();
             }
 
-            if (value > mValue) {
+            else {
                 return new Node(mValue, mLeft, mRight.insert(value)).balance();
             }
-
-            return this;
         }
 
         public Node remove(int value) {
