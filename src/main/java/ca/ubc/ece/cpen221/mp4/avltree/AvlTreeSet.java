@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp4.avltree;
 
+
 public class AvlTreeSet {
     private Node mRoot;
 
@@ -29,7 +30,6 @@ public class AvlTreeSet {
     	if(!mRoot.contains(value)) {
     		mRoot = mRoot.insert(value);
     	}
-        mRoot = mRoot.insert(value);
     }
 
     /**

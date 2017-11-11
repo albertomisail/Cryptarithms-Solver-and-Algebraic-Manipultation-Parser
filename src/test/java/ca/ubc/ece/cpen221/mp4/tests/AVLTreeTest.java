@@ -5,18 +5,18 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ca.ubc.ece.cpen221.mp4.avltree.AvlTreeSet;
-import ca.ubc.ece.cpen221.mp4.avltree.Repaired;
+import ca.ubc.ece.cpen221.mp4.avltree.AvlTreeSet;
 
 public class AVLTreeTest {
 	@Test
 	public void test1() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		assertEquals(0, tree.size());
 	}
 	
 	@Test
 	public void test2() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(1);
 		tree.insert(2);
 		tree.insert(3);
@@ -25,14 +25,14 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test3() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(1);
 		assertEquals(1, tree.size());
 	}
 	
 	@Test
 	public void test4() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		assertEquals(false, tree.contains(-1));
 		tree.insert(-1);
 		assertEquals(true, tree.contains(-1));
@@ -40,7 +40,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test5() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		assertEquals(true, tree.isEmpty());
 		tree.insert(1);
 		assertEquals(false, tree.isEmpty());
@@ -51,7 +51,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test6() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		assertEquals(0, tree.size());
 		assertEquals(true, tree.isEmpty());
 		tree.insert(1);
@@ -67,7 +67,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test7() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(1);
 		tree.insert(2);
 		tree.insert(4);
@@ -81,14 +81,14 @@ public class AVLTreeTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void test8() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(1);
 		tree.remove(0);
 	}
 	
 	@Test
 	public void test9() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(1);
 		tree.insert(2);
 		tree.insert(4);
@@ -98,7 +98,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test10() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(4);
 		tree.insert(3);
 		tree.insert(5);
@@ -108,7 +108,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test11() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		assertEquals(-1, tree.getHeight());
 		tree.insert(4);
 		assertEquals(0, tree.getHeight());
@@ -116,7 +116,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test12() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(4);
 		tree.insert(3);
 		tree.insert(5);
@@ -131,7 +131,7 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test13() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(8);
 		tree.insert(15);
 		tree.insert(6);
@@ -145,7 +145,7 @@ public class AVLTreeTest {
 	/*Rotation test*/
 	@Test
 	public void test14() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(6);
 		tree.insert(7);
 		tree.insert(9);
@@ -157,12 +157,12 @@ public class AVLTreeTest {
 	
 	@Test
 	public void test15() {
-		Repaired tree1 = new Repaired();
+		AvlTreeSet tree1 = new AvlTreeSet();
 		tree1.insert(3);
 		tree1.insert(1);
 		tree1.insert(2);
 		assertEquals(1, tree1.getHeight());
-		Repaired tree2 = new Repaired();
+		AvlTreeSet tree2 = new AvlTreeSet();
 		tree2.insert(1);
 		tree2.insert(3);
 		tree2.insert(2);
@@ -171,19 +171,19 @@ public class AVLTreeTest {
 	
 	@Test (expected = IllegalStateException.class)
 	public void test16() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.getMax();
 	}
 	
 	@Test (expected = IllegalStateException.class)
 	public void test17() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.getMin();
 	}
 	
 	@Test
 	public void test18() {
-		Repaired tree = new Repaired();
+		AvlTreeSet tree = new AvlTreeSet();
 		tree.insert(2);
 		tree.insert(1);
 		tree.insert(3);
