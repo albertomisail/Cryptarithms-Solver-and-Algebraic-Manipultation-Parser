@@ -221,30 +221,7 @@ public class Cryptarithm {
 			}
 		}
 		return true;
-	}
-	
-	private static double evaluate(List<WordExpression> words, List<String> operators) {
-		Expression aux = new GeneralExpression(words.get(0).eval());
-		for (int i = 0; i < operators.size(); i++) {
-			BinaryOperator bin = recognize(operators.get(i));
-			double computation = bin.apply(aux.eval(), words.get(i + 1).eval());
-			aux = new GeneralExpression(computation);
-		}
-		return aux.eval();
-	}
-
-	private static BinaryOperator recognize(String operator) {
-		if (operator.equals("+")) {
-			return new Addition();
-		} else if (operator.equals("*")) {
-			return new Multiplication();
-		} else if (operator.equals("-")) {
-			return new Subtraction();
-		} else {
-			return new Division();
-		}
-	}
-	
+	}	
 
 	private static Set<Integer[]> generateSubsets(int k) {
 		Set<Integer[]> result = new LinkedHashSet<Integer[]>();
