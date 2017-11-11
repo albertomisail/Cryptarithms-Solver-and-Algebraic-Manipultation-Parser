@@ -1,6 +1,5 @@
 package ca.ubc.ece.cpen221.mp4.avltree;
 
-
 public class AvlTreeSet {
     private Node mRoot;
 
@@ -27,6 +26,9 @@ public class AvlTreeSet {
      * @param value The integer to insert.
      */
     public void insert(int value) {
+    	if(!mRoot.contains(value)) {
+    		mRoot = mRoot.insert(value);
+    	}
         mRoot = mRoot.insert(value);
     }
 
