@@ -29,30 +29,11 @@ public class DerivativeExpression implements Expression {
 
 	@Override
 	public double eval() {
-		// TODO implement this method
-		
-		//return 0; // change this
-				
 		double fx = fn.eval();
 		independentVar.store(independentVar.eval()+DELTA_X);
 		double fxh = fn.eval();
 		//restores original variable value
 		independentVar.store(independentVar.eval() - DELTA_X);
-		return (fxh - fx)/DELTA_X;
-		
+		return (fxh - fx)/DELTA_X;	
 	}
-	
-	/*public static void main(String[] args) {
-		VariableExpression x = new VariableExpression("x");
-		x.store(4);
-		NonVariableExpression y = new NonVariableExpression(2);
-		
-		Expression e1 = new NonVariableExpression(new Addition(), x, y);
-		Expression e2 = new NonVariableExpression(new Multiplication(), x, x);
-		DerivativeExpression d1 = new DerivativeExpression(e1, x);
-		//DerivativeExpression d3 = new DerivativeExpression(e2, x);
-		
-		System.out.println("Values are:" + d1.eval() + " " + /*d3.eval() + " " );
-	}*/
-
 }

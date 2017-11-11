@@ -3,7 +3,7 @@ package ca.ubc.ece.cpen221.mp4.expression;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
 
-public class NonVariableExpression implements Expression{
+public class GeneralExpression implements Expression{
 	private final String name;
 	private double value;
 	
@@ -12,20 +12,20 @@ public class NonVariableExpression implements Expression{
 	private Expression expLeft;
 	private Expression expRight;
 	
-	public NonVariableExpression(BinaryOperator operator, Expression operand1, Expression operand2) {
+	public GeneralExpression(BinaryOperator operator, Expression operand1, Expression operand2) {
 		this.name = "(" + operand1.toString() + operator.toString() + operand2.toString() + ")";
 		this.expLeft = operand1;
 		this.expRight = operand2;
 		this.binOperator = operator;
 	}
 	
-	public NonVariableExpression(UnaryOperator operator, Expression operand) {
+	public GeneralExpression(UnaryOperator operator, Expression operand) {
 		this.name = "(" + operator.toString() + operand.toString() + ")";
 		this.uniOperator = operator;
 		this.expLeft = operand;
 	}
 	
-	public NonVariableExpression(double value) {
+	public GeneralExpression(double value) {
 		this.name = "" + value;
 		this.store(value);
 	}

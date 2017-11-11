@@ -10,11 +10,11 @@ public class VariableExpressionTest {
 	public void test1() {
 		String var = "x";
 		VariableExpression x = new VariableExpression(var);
-		Expression two = new NonVariableExpression(2);
+		Expression two = new GeneralExpression(2);
 		for(int i = 0; i <= 5; i++) {
 			x.store(i);
-			Expression xx = new NonVariableExpression(new Multiplication(), x, x);
-			Expression xx2 = new NonVariableExpression(new Subtraction(), xx, two);
+			Expression xx = new GeneralExpression(new Multiplication(), x, x);
+			Expression xx2 = new GeneralExpression(new Subtraction(), xx, two);
 			System.out.println(i);
 			System.out.println(xx2);
 			System.out.println(xx2.eval());

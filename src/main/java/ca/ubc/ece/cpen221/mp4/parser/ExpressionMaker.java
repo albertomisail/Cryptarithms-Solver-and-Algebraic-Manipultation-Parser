@@ -1,7 +1,7 @@
 package ca.ubc.ece.cpen221.mp4.parser;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.expression.NonVariableExpression;
+import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
@@ -26,9 +26,7 @@ public class ExpressionMaker {
 	 */
 	public Expression createBinaryOperationExpression(BinaryOperator operator, Expression operand1,
 			Expression operand2) {
-		// TODO implement this method
-		Expression result = new NonVariableExpression(operator, operand1, operand2);
-		//Expression result = new VariableExpression(operator, operand1, operand2);
+		Expression result = new GeneralExpression(operator, operand1, operand2);
 		return result;		
 	}
 
@@ -42,9 +40,7 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createUnaryOperationExpression(UnaryOperator operator, Expression operand) {
-		// TODO implement this method
-		Expression result = new NonVariableExpression(operator, operand);
-		//Expression result = new VariableExpression(operator, operand);
+		Expression result = new GeneralExpression(operator, operand);
 		return result;
 	}
 
@@ -56,9 +52,7 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createNumberExpression(double value) {
-		// TODO implement this method
-		Expression result = new NonVariableExpression(value);
-		//Expression result = new VariableExpression(value);
+		Expression result = new GeneralExpression(value);
 		return result;
 	}
 	
@@ -66,5 +60,4 @@ public class ExpressionMaker {
 		Expression result = new VariableExpression(name);
 		return result;
 	}
-
 }

@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.expression.NonVariableExpression;
+import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
 import ca.ubc.ece.cpen221.mp4.expression.WordExpression;
 import ca.ubc.ece.cpen221.mp4.operator.*;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
 
-import ca.ubc.ece.cpen221.mp4.expression.NonVariableExpression;
+import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
 import ca.ubc.ece.cpen221.mp4.operator.Addition;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
@@ -33,22 +33,11 @@ import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
  *
  */
 public class Cryptarithm {
-	/*
-	 * private Map<Character, VariableExpression> variableExpressions; private
-	 * Map<Integer, VariableExpression> variables; private List<WordExpression>
-	 * wordsLeft; private List<WordExpression> wordsRight; private List<String>
-	 * operatorsLeft; private List<String> operatorsRight;
-	 * 
-	 * private static final Set<String> operators = new
-	 * LinkedHashSet<String>(Arrays.asList("+", "-", "*", "/"));
-	 */
-	private static final Set<Integer> digits = new LinkedHashSet<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-
-	// left hand side and right hand side of the expression
-	private NonVariableExpression lhs;
-	private NonVariableExpression rhs;
+	private GeneralExpression lhs;
+	private GeneralExpression rhs;
 	private List<VariableExpression> letters;
 	private List<VariableExpression> firstLetters;
+	private int numberOfLetters;
 
 	/**
 	 * Cryptarithm constructor
@@ -56,63 +45,46 @@ public class Cryptarithm {
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
+	 * @throws Invalid
 	 */
-	// ** CAN WE ASSUME THAT THEY PASS A VALID CRYPTARITHM?
-	public Cryptarithm(String[] cryptarithm) {
-		/*
-		 * //<<<<<<< HEAD // TODO implement this constructor this.operatorsLeft = new
-		 * ArrayList<String>(); this.operatorsRight = new ArrayList<String>();
-		 * this.wordsLeft = new ArrayList<WordExpression>(); this.wordsRight = new
-		 * ArrayList<WordExpression>(); this.variables = new LinkedHashMap<Integer,
-		 * VariableExpression>(); this.variableExpressions = new
-		 * LinkedHashMap<Character, VariableExpression>();
-		 * 
-		 * boolean equals = false; for (String word : cryptarithm) { if
-		 * (word.equals("=")) { equals = true; } else { if (equals) { //TODO //change to
-		 * mod 2 thin if (operators.contains(word)) { operatorsRight.add(word); } else {
-		 * // wordsRight.add(word); for (int i = 0; i < word.length(); i++) {
-		 * VariableExpression variable = new VariableExpression(word.charAt(i) + ""); if
-		 * (!variables.containsValue(variable)) { variables.put(variables.size(),
-		 * variable); variableExpressions.put(word.charAt(i), variable); } }
-		 * wordsRight.add(new WordExpression(word, variableExpressions)); } } else { if
-		 * (operators.contains(word)) { operatorsLeft.add(word); } else { //
-		 * wordsLeft.add(word); for (int i = 0; i < word.length(); i++) {
-		 * VariableExpression variable = new VariableExpression(word.charAt(i) + ""); if
-		 * (!variables.containsValue(variable)) { variables.put(variables.size(),
-		 * variable); variableExpressions.put(word.charAt(i), variable); } }
-		 * wordsRight.add(new WordExpression(word, variableExpressions)); } } } }
-		 * //=======
-		 */
+	public Cryptarithm(String[] cryptarithm) throws InvalidCryptarithmException{
+		if(!Arrays.asList(cryptarithm).contains("=")) {
+			throw new InvalidCryptarithmException();
+		}
 		letters = new ArrayList<VariableExpression>();
 		firstLetters = new ArrayList<VariableExpression>();
-		NonVariableExpression word;
+		numberOfLetters = 0;
+		lhs = null;
+		rhs = null;
+		GeneralExpression word;
 		BinaryOperator op = null;
 		int i = 0;
-
-		for (i = 0; cryptarithm[i] != "="; i++) {
+		for (i = 0; !cryptarithm[i].equals("="); i++) {
 			if (i % 2 == 0) {
-				word = WordConstructor(cryptarithm[i]);
+				word = wordConstructor(cryptarithm[i]);
 				if (op == null)
 					lhs = word;
 				else
-					lhs = new NonVariableExpression(op, lhs, word);
+					lhs = new GeneralExpression(op, lhs, word);
 			} else {
-				op = (OperationConstructor(cryptarithm[i]));
+				op = (operationConstructor(cryptarithm[i]));
 			}
 		}
 		op = null;
 		for (i = i+1 ; i<cryptarithm.length; i++) {
 			if (i % 2 == 0) {
-				word = WordConstructor(cryptarithm[i]);
+				word = wordConstructor(cryptarithm[i]);
 				if (op == null)
 					rhs = word;
 				else
-					rhs = new NonVariableExpression(op, rhs, word);
+					rhs = new GeneralExpression(op, rhs, word);
 			} else {
-				op = (OperationConstructor(cryptarithm[i]));
+				op = (operationConstructor(cryptarithm[i]));
 			}
 		}
-		System.out.println("askldfj");
+		if(lhs==null||rhs==null) {
+			throw new InvalidCryptarithmException();
+		}
 	}
 
 	/**
@@ -122,7 +94,7 @@ public class Cryptarithm {
 	 *            a String representing a valid operator, +, -, *, \
 	 * @return A BinaryOperator represented by the string
 	 */
-	private BinaryOperator OperationConstructor(String s) {
+	private BinaryOperator operationConstructor(String s) throws InvalidCryptarithmException {
 		BinaryOperator op = null;
 		switch (s) {
 		case "+":
@@ -137,8 +109,11 @@ public class Cryptarithm {
 		case "/":
 			op = new Division();
 			break;
-		// can use if we want to check for invalid operations
-		// default: throw new NoSolutionException();
+		case "=":
+			break;
+		default:
+			System.out.println("fuck");
+			throw new InvalidCryptarithmException();
 		}
 		return op;
 	}
@@ -150,11 +125,9 @@ public class Cryptarithm {
 	 *            the word to parse
 	 * @return a NonVariableExpression representing the word
 	 */
-	private NonVariableExpression WordConstructor(String word) {
-		// VariableExpression letter;
-		// VariableExpression magnitude = new VariableExpression("magnitude");
-		NonVariableExpression parsedLetter;
-		NonVariableExpression parsedWord = null;
+	private GeneralExpression wordConstructor(String word) throws InvalidCryptarithmException{
+		GeneralExpression parsedLetter;
+		GeneralExpression parsedWord = null;
 
 		int iterator = word.length() - 1;
 
@@ -173,37 +146,25 @@ public class Cryptarithm {
 			if (letter == null) {
 				letter = new VariableExpression("" + c);
 				letters.add(letter);
+				numberOfLetters++;
+				if(numberOfLetters>10) {
+					throw new InvalidCryptarithmException();
+				}
 				if (c == word.charAt(0)) {
 					firstLetters.add(letter);
 				}
 			}
-			parsedLetter = new NonVariableExpression(new Multiplication(), letter, magnitude);
+			parsedLetter = new GeneralExpression(new Multiplication(), letter, magnitude);
 
 			if (parsedWord == null) {
 				parsedWord = parsedLetter;
 			} else {
-				parsedWord = new NonVariableExpression(new Addition(), parsedWord, parsedLetter);
+				parsedWord = new GeneralExpression(new Addition(), parsedWord, parsedLetter);
 			}
 		}
-		// FIXED bug: *currently every letter in the same word has the same magnitude*
-		// need to make a new copy of magnitude somehow... and use it for each
-		// parsedLetter
 		return parsedWord;
 	}
-
-	// test constructor
-	public static void main(String[] args) throws NoSolutionException{
-		String[] crypto = { "SEND", "+", "MORE", "=", "MONEY" };
-		Cryptarithm parsedCrypto = new Cryptarithm(crypto);
-		System.out.println(parsedCrypto.solve());
-		String[] cr = {"A" ,"=","A"};
-		Cryptarithm cr1 = new Cryptarithm(cr);
-		System.out.println(cr1.solve());
-		String[] x = { "NORTH", "/", "SOUTH", "=", "EAST", "/", "WEST" };
-		Cryptarithm x2 = new Cryptarithm(x);
-		System.out.println(x2.solve());
-		
-	}
+	
 	/*
 	 * 
 	 * /** Find solutions to the cryptarithm
@@ -213,24 +174,23 @@ public class Cryptarithm {
 	 */
 
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
-		// TODO implement this method
 		List<Map<Character, Integer>> result = new ArrayList<Map<Character, Integer>>();
 		
 		Set<Integer[]> digitSubset = Cryptarithm.generateSubsets(letters.size());
 		for (Integer[] subset : digitSubset) {
 			Permutation<Integer> permutation = new Permutation<Integer>(subset);
-			for (int i = 0; i < permutation.getNumberOfPerms(); i++) {
-				Integer[] onePermutation = permutation.getOnePermutation();
-				assign(onePermutation);
+			Set<Integer[]> permutations = permutation.generateAllPermutations(permutation.getLength());
+			for(Integer[] onePerm : permutations) {
+				assign(onePerm);
 				if (checkSol()) {
-					result.add(generateMap(onePermutation));
+					result.add(generateMap(onePerm));
 				}
 			}
 		}
 		if(result.size()==0) {
 			throw new NoSolutionException();
 		}
-		return result;// change this
+		return result;
 	}
 
 	private void assign(Integer[] arr) {
@@ -239,7 +199,7 @@ public class Cryptarithm {
 		}
 	}
 
-	public Map<Character, Integer> generateMap(Integer[] values) {
+	private Map<Character, Integer> generateMap(Integer[] values) {
 		Map<Character, Integer> result = new LinkedHashMap<Character, Integer>();
 		for (int i = 0; i < values.length; i++) {
 			result.put(letters.get(i).name().charAt(0), values[i]);
@@ -263,17 +223,17 @@ public class Cryptarithm {
 		return true;
 	}
 	
-	public static double evaluate(List<WordExpression> words, List<String> operators) {
-		Expression aux = new NonVariableExpression(words.get(0).eval());
+	private static double evaluate(List<WordExpression> words, List<String> operators) {
+		Expression aux = new GeneralExpression(words.get(0).eval());
 		for (int i = 0; i < operators.size(); i++) {
 			BinaryOperator bin = recognize(operators.get(i));
 			double computation = bin.apply(aux.eval(), words.get(i + 1).eval());
-			aux = new NonVariableExpression(computation);
+			aux = new GeneralExpression(computation);
 		}
 		return aux.eval();
 	}
 
-	public static BinaryOperator recognize(String operator) {
+	private static BinaryOperator recognize(String operator) {
 		if (operator.equals("+")) {
 			return new Addition();
 		} else if (operator.equals("*")) {
@@ -284,9 +244,9 @@ public class Cryptarithm {
 			return new Division();
 		}
 	}
-	// this works fine
+	
 
-	public static Set<Integer[]> generateSubsets(int k) {
+	private static Set<Integer[]> generateSubsets(int k) {
 		Set<Integer[]> result = new LinkedHashSet<Integer[]>();
 		for (int bitVec = 0; bitVec < 1 << 10; bitVec++) {
 			if (Integer.bitCount(bitVec) == k) {
@@ -307,15 +267,4 @@ public class Cryptarithm {
 		}
 		return result;
 	}
-
-	public static void printArr(Integer[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + " ");
-		}
-		System.out.println("");
-	}
-
-	
-
-	// You will need more methods
 }

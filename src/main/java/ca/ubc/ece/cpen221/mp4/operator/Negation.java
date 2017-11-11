@@ -7,6 +7,6 @@ public class Negation implements UnaryOperator{
 	}
 	
 	public String toString() {
-		return "neg";
+		return "!";
 	}
 }
