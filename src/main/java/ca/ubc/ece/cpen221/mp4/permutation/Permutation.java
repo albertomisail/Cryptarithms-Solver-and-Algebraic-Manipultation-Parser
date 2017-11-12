@@ -80,6 +80,7 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	
 	@Override
 	public T[] getOnePermutation() {
+		
 		T[] result = elementsArray;
 		List<T> auxiliary = Arrays.asList(elementsArray);
 		Collections.shuffle(auxiliary);
