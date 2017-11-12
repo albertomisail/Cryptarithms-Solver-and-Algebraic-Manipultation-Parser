@@ -24,11 +24,6 @@ public class VariableExpression implements Expression {
 	private final String name;
 	private double value;
 	
-	
-	/*private UnaryOperator uniOperator;
-	private BinaryOperator binOperator;
-	private Expression expLeft;
-	private Expression expRight;*/
 
 	/**
 	 * Constructs a variable with the specified name, whose initial value is
@@ -42,28 +37,6 @@ public class VariableExpression implements Expression {
 		this.value = 0;
 	}
 	
-	/*public VariableExpression(BinaryOperator operator, Expression operand1, Expression operand2) {
-		this.name = operand1.toString() + operator.toString() + operand2.toString();
-		this.expLeft = operand1;
-		this.expRight = operand2;
-		this.binOperator = operator;
-	}
-	
-	public VariableExpression(UnaryOperator operator, Expression operand) {
-		this.name = operator.toString() + operand.toString();
-		this.uniOperator = operator;
-		this.expLeft = operand;
-	}
-	
-	public VariableExpression(double value) {
-		this.name = "" + value;
-		this.store(value);
-	}
-	
-	public VariableExpression(char c) {
-		this.name = "" + c;
-	}*/
-	
 	@Override
 	/**
 	 * Evaluates an arithmetic expression.
@@ -71,18 +44,7 @@ public class VariableExpression implements Expression {
 	 * @return the value to which this expression evaluates
 	 */
 	public double eval() {
-
-		// TODO implement this method
 		return value;
-		/*if(this.expLeft==null) {
-			return this.variable;
-		}
-		else if(this.expRight==null) {
-			return this.uniOperator.apply(this.expLeft.eval());
-		}
-		else {
-			return this.binOperator.apply(this.expLeft.eval(), this.expRight.eval());
-		}*/
 	}
 
 	@Override

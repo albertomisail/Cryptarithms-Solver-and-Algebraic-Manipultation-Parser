@@ -58,13 +58,4 @@ public class GeneralExpression implements Expression{
 	public void store(double value) {
 		this.value = value;
 	}
-
-	/**
-	 * Returns the name of this variable
-	 * 
-	 * @return the name of the variable
-	 */
-	public String name() {
-		return name;
-	}
 }

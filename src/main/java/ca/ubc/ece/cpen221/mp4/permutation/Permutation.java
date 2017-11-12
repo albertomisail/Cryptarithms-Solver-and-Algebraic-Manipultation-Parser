@@ -18,17 +18,31 @@ public class Permutation<T> implements AbstractPermutation<T> {
 	private T[] elementsArray;
 	private Set<T[]> allPermutations;
 	private int length;
-	
+	/**
+	 * Construct a new generic permutation
+	 * @param elementsArray the array for which its elements is wanted to be permutated
+	 */
 	public Permutation(T[] elementsArray) {
 		this.elementsArray = elementsArray;
 		this.allPermutations = new LinkedHashSet<T[]>();
 		this.length = elementsArray.length;
 	}
 	
+	/**
+	 * 
+	 * @return the number of elements in elementsArray
+	 */
 	public int getLength() {
 		return length;
 	}
 	
+	/**
+	 * Generate all permutations using heap's algorithm
+	 * @param counter the position for which all the elements in the array of elements array are going to be permutated
+	 * @return a set x of arrays of type T
+	 *  		if e is in x then the elements in e are a permutation of the elements in elementsArray
+	 * 			if the elements in any array e are a permutation of the elements in elementsArray, then e is part of x
+	 */
 	public Set<T[]> generateAllPermutations(int counter) {
 		if(counter == 1) {
 			@SuppressWarnings("unchecked")
@@ -53,6 +67,11 @@ public class Permutation<T> implements AbstractPermutation<T> {
 		return allPermutations;
 	}
 	
+	/**
+	 * Clones the values from an array origin to another array destiny
+	 * @param origin the array of values that we want to clone
+	 * @param destiny the array in which we are going to store the values of origin
+	 */
 	private void copyArray(T[] origin, T[] destiny) {
 		for(int i = 0; i < origin.length; i++) {
 			destiny[i] = origin[i];

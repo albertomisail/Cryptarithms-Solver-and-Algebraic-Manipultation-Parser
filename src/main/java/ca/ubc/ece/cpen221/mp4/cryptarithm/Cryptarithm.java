@@ -136,7 +136,7 @@ public class Cryptarithm {
 			VariableExpression magnitude = new VariableExpression("magnitude");
 			magnitude.store(Math.pow(10, iterator--));
 			for (VariableExpression var : letters) {
-				if (var.name().equals("" + c)) {
+				if (var.name().equals(""+c)) {
 					letter = var;
 					if (c == word.charAt(0)) {
 						firstLetters.add(letter);

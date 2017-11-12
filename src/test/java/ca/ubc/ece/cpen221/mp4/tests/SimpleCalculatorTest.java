@@ -32,6 +32,7 @@ public class SimpleCalculatorTest {
 		Expression f = new GeneralExpression(times, e, e2);
 		Expression g = new GeneralExpression(div, e2, e);
 		Expression h = new GeneralExpression(exp, e2, a);
+		assertEquals("10.0",e2.toString());
 		assertEquals(5,(int)a.eval());
 		assertEquals(-10,(int)b.eval());
 		assertEquals(5, (int)c.eval());
