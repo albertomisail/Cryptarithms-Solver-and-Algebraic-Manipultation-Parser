@@ -175,7 +175,8 @@ public class AvlTreeSet {
             }
 
             if (value <= mValue) {
-                return new Node(mValue, mLeft.insert(value), mRight).balance();
+                Node n = new Node(mValue, mLeft.insert(value), mRight);
+                return n.balance();
             }
 
             else {
@@ -267,14 +268,15 @@ public class AvlTreeSet {
         }
 
         private Node singleRotateRight() {
-            int value = mLeft.getValue();
+        	int value = mLeft.getValue();
             Node left = mLeft.getLeft();
             Node right = new Node(mValue, mLeft.getRight(), mRight);
             return new Node(value, left, right);
         }
 
         private Node doubleRotateRight() {
-            int value = mLeft.getRight().getValue();
+        	
+        	int value = mLeft.getRight().getValue();
             Node left = new Node(mLeft.getValue(), mLeft.getLeft(), mLeft.getRight().getLeft());
             Node right = new Node(mValue, mLeft.getRight().getRight(), mRight);
             return new Node(value, left, right);

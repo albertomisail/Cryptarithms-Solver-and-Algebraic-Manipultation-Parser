@@ -136,9 +136,7 @@ public class AVLTreeTest {
 		tree.insert(6);
 		tree.insert(7);
 		tree.insert(9);
-		//TODO
-		//change this
-		System.out.println(tree);
+		assertEquals(2, tree.getHeight());
 	}
 	
 	/*Rotation test*/
@@ -193,4 +191,18 @@ public class AVLTreeTest {
 		tree.remove(2);
 		assertEquals(1, tree.size());
 	}
+	
+	@Test
+	public void test19() {
+		AvlTreeSet tree = new AvlTreeSet();
+		assertEquals(false, tree.contains(-1));
+		assertEquals(true, tree.isEmpty());
+		assertEquals(-1, tree.getHeight());
+		assertEquals(0, tree.size());
+		tree.insert(-1);
+		assertEquals(true, tree.contains(-1));
+		assertEquals(false, tree.isEmpty());
+		assertEquals(0, tree.getHeight());
+		assertEquals(1, tree.size());
+	}		
 }
