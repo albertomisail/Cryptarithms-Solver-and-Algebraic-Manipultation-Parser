@@ -21,15 +21,4 @@ public class DerivativeTest {
 		assertEquals(0,(int)Math.abs(d1.eval()-1));
 		assertEquals(0,(int)Math.abs(d2.eval()-8));
 	}
-	
-	@Test
-	public void test1() {
-		VariableExpression x = new VariableExpression("x");
-		x.store(4);
-		Expression e = new GeneralExpression(new Multiplication(), x, x);
-		DerivativeExpression d = new DerivativeExpression(e, x);
-		DerivativeExpression d2 = new DerivativeExpression(d, x);
-		assertEquals(0,(int)Math.abs(d.eval()-8));
-		assertEquals(0, (int)Math.abs(d2.eval()-2));
-	}
 }

@@ -13,7 +13,7 @@ public class NewtonsMethod {
 	 * @return a value y such that |tolerance|>|f(y)|
 	 * @throws NoZeroException if after Integer.MAX_VALUE-1 iterations a zero was not found
 	 */
-	public static double NewtonsMethod(Expression function, VariableExpression x, double approxZero, double tolerance) throws NoZeroException {
+	public static double findZeros(Expression function, VariableExpression x, double approxZero, double tolerance) throws NoZeroException {
 		int count = 0;
 		final double initialxval = x.eval();
 		double betterAprox = approxZero;
@@ -25,7 +25,7 @@ public class NewtonsMethod {
 			betterAprox = betterAprox - f_x_i/df_x_i;
 			x.store(betterAprox);
 			count++;
-			if(count>Integer.MAX_VALUE-1) {
+			if(count>100000000) {
 				x.store(initialxval);
 				throw new NoZeroException();
 			}
