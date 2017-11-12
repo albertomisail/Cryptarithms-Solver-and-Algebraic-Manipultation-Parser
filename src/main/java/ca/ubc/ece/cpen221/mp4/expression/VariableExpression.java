@@ -1,12 +1,5 @@
 package ca.ubc.ece.cpen221.mp4.expression;
 
-import java.util.Stack;
-
-
-import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
-import ca.ubc.ece.cpen221.mp4.operator.Operator;
-import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
-
 /**
  * An expression that represents a variable. Its value may be set as well as
  * read. Unlike other expressions in this assignment, variables are mutable.
@@ -20,7 +13,6 @@ import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
  * representation of the containing expression will be misleading.
  */
 public class VariableExpression implements Expression {
-
 	private final String name;
 	private double value;
 	
@@ -48,6 +40,10 @@ public class VariableExpression implements Expression {
 	}
 
 	@Override
+	/**
+	 * Returns the name of this variable
+	 * @return the name of the variable
+	 */
 	public String toString() {
 		return name; 
 	}
@@ -72,6 +68,10 @@ public class VariableExpression implements Expression {
 	}
 	
 	@Override
+	/**
+	 * Compares another object with this variable for equality
+	 * @return true if both objects are variable expressions and have the same name
+	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

@@ -32,7 +32,6 @@ public class GeneralExpression implements Expression{
 	
 	@Override
 	public double eval() {
-		// TODO implement this method
 		if(this.expLeft==null) {
 			return this.value;
 		}
