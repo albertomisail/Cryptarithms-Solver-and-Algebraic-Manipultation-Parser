@@ -29,8 +29,9 @@ import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
 import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
 
 /**
- * Cryptarithm - a datatype that represents a cryptarithm
- *
+ * Cryptarithm - a data type that represents a cryptarithm
+ * REP INVARIANT:
+ * ADT:
  */
 public class Cryptarithm {
 	private GeneralExpression lhs;
@@ -45,7 +46,7 @@ public class Cryptarithm {
 	 * @param cryptarithm
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
-	 * @throws Invalid
+	 * @throws InvalidCryptarithmException
 	 */
 	public Cryptarithm(String[] cryptarithm) throws InvalidCryptarithmException{
 		if(!Arrays.asList(cryptarithm).contains("=")) {
@@ -59,6 +60,8 @@ public class Cryptarithm {
 		GeneralExpression word;
 		BinaryOperator op = null;
 		int i = 0;
+		//if the cryptarithm is valid, each even indexed array entry should be a word
+		//each odd entry should be an operator 
 		for (i = 0; !cryptarithm[i].equals("="); i++) {
 			if (i % 2 == 0) {
 				word = wordConstructor(cryptarithm[i]);
@@ -88,11 +91,12 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * PARSES OPERATORS
+	 * Reads a string and returns the corresponding binary operator
 	 * 
 	 * @param s
 	 *            a String representing a valid operator, +, -, *, \
-	 * @return A BinaryOperator represented by the string
+	 * @return a BinaryOperator represented by the string
+	 * @throws InvalidCryptarithmException when s isn't valid (e.g. a non-approved operator, a misplaced word)
 	 */
 	private BinaryOperator operationConstructor(String s) throws InvalidCryptarithmException {
 		BinaryOperator op = null;
@@ -112,7 +116,6 @@ public class Cryptarithm {
 		case "=":
 			break;
 		default:
-			System.out.println("fuck");
 			throw new InvalidCryptarithmException();
 		}
 		return op;
@@ -207,13 +210,22 @@ public class Cryptarithm {
 		return result;
 	}
 
+	/**
+	 * Checks if a set of values for the different characters/variables is a valid solution to the cryptarithm
+	 * @return true if solution is valid; false otherwise
+	 */
 	private boolean checkSol() {
+		//first letters have to be non-zero and left hand side equal to right hand side
 		if(noZero(firstLetters) && lhs.eval()==rhs.eval()) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Checks if a list of variables contains any zeroes
+	 * @return false if the list contains one or more variables with the value zero; true otherwise
+	 */
 	private boolean noZero(List<VariableExpression> words) {
 		for(VariableExpression var : words) {
 			if(var.eval()==0) {
@@ -223,6 +235,11 @@ public class Cryptarithm {
 		return true;
 	}	
 
+	/** I"M NOT SURE IF INTERPRETED THIS CORRECTLY
+	 * Returns all the possible subsets of of size k
+	 * @param k
+	 * @return A set of integer arrays such that each array contains k
+	 */
 	private static Set<Integer[]> generateSubsets(int k) {
 		Set<Integer[]> result = new LinkedHashSet<Integer[]>();
 		for (int bitVec = 0; bitVec < 1 << 10; bitVec++) {

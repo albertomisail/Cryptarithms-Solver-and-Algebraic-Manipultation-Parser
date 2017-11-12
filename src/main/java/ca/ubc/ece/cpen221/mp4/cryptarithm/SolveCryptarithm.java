@@ -1,21 +1,22 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-
-import ca.ubc.ece.cpen221.mp4.expression.Expression;
 
 public class SolveCryptarithm {
 
 	public static void main(String[] args) {
-		// TODO implement this main method
-		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter a cryptarithm");
+		System.out.println("Enter a cryptarithm:");
 		String expression = scanner.nextLine();
+		scanner.close();
 		String[] cryptos = expression.split(" ");
 		try {
 			Cryptarithm crypto = new Cryptarithm(cryptos);
-			System.out.println(crypto.solve());
+			List<Map<Character,Integer>> solutions = crypto.solve();
+			System.out.println("Found " + solutions.size() + " solution(s):");
+			System.out.println(solutions);
 		} catch (InvalidCryptarithmException e) {
 			System.out.println("Invalid input");
 		}catch(NoSolutionException e) {
