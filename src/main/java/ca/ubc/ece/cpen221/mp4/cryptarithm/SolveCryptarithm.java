@@ -16,6 +16,7 @@ public class SolveCryptarithm {
 			System.out.println("Enter a cryptarithm:");
 			expression = scanner.nextLine();
 			// split line into strings to pass to array
+			expression = expression.trim();
 			String[] cryptos = expression.split(" ");
 			try {
 				// try to solve cryptarithm
