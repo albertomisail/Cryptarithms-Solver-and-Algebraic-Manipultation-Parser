@@ -1,41 +1,30 @@
 package ca.ubc.ece.cpen221.mp4.cryptarithm;
 
 import java.util.ArrayList;
-//<<<<<<< HEAD
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-//=======
-//>>>>>>> 9a7ab7ce4a1a660043c109e9cc2cb6a1d626ca47
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
+import ca.ubc.ece.cpen221.mp4.expression.BinaryExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
-import ca.ubc.ece.cpen221.mp4.expression.WordExpression;
-import ca.ubc.ece.cpen221.mp4.operator.*;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.permutation.Permutation;
 
-import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
-import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
 import ca.ubc.ece.cpen221.mp4.operator.Addition;
-import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.Division;
 import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
 import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
 
 /**
- * Cryptarithm - a data type that represents a cryptarithm
- * REP INVARIANT:
- * ADT:
+ * Cryptarithm - a data type that represents a cryptarithm REP INVARIANT: ADT:
  */
 public class Cryptarithm {
-	private GeneralExpression lhs;
-	private GeneralExpression rhs;
+	private BinaryExpression lhs;
+	private BinaryExpression rhs;
 	private List<VariableExpression> letters;
 	private List<VariableExpression> firstLetters;
 	private int numberOfLetters;
@@ -48,8 +37,8 @@ public class Cryptarithm {
 	 *            cryptarithm
 	 * @throws InvalidCryptarithmException
 	 */
-	public Cryptarithm(String[] cryptarithm) throws InvalidCryptarithmException{
-		if(!Arrays.asList(cryptarithm).contains("=")) {
+	public Cryptarithm(String[] cryptarithm) throws InvalidCryptarithmException {
+		if (!Arrays.asList(cryptarithm).contains("=")) {
 			throw new InvalidCryptarithmException();
 		}
 		letters = new ArrayList<VariableExpression>();
@@ -57,35 +46,38 @@ public class Cryptarithm {
 		numberOfLetters = 0;
 		lhs = null;
 		rhs = null;
-		GeneralExpression word;
+		BinaryExpression word;
 		BinaryOperator op = null;
 		int i = 0;
-		//if the cryptarithm is valid, each even indexed array entry should be a word
-		//each odd entry should be an operator 
+		// if the cryptarithm is valid, each even indexed array entry should be a word
+		// each odd entry should be an operator
 		for (i = 0; !cryptarithm[i].equals("="); i++) {
 			if (i % 2 == 0) {
 				word = wordConstructor(cryptarithm[i]);
+				//if no operation has been parsed yet, we are reading the first word
+				//otherwise, we should add the word to the existing expression
 				if (op == null)
 					lhs = word;
 				else
-					lhs = new GeneralExpression(op, lhs, word);
+					lhs = new BinaryExpression(op, lhs, word);
 			} else {
 				op = (operationConstructor(cryptarithm[i]));
 			}
 		}
+		//resets operator to null to parse right hand side
 		op = null;
-		for (i = i+1 ; i<cryptarithm.length; i++) {
+		for (i = i + 1; i < cryptarithm.length; i++) {
 			if (i % 2 == 0) {
 				word = wordConstructor(cryptarithm[i]);
 				if (op == null)
 					rhs = word;
 				else
-					rhs = new GeneralExpression(op, rhs, word);
+					rhs = new BinaryExpression(op, rhs, word);
 			} else {
 				op = (operationConstructor(cryptarithm[i]));
 			}
 		}
-		if(lhs==null||rhs==null) {
+		if (lhs == null || rhs == null) {
 			throw new InvalidCryptarithmException();
 		}
 	}
@@ -96,7 +88,9 @@ public class Cryptarithm {
 	 * @param s
 	 *            a String representing a valid operator, +, -, *, \
 	 * @return a BinaryOperator represented by the string
-	 * @throws InvalidCryptarithmException when s isn't valid (e.g. a non-approved operator, a misplaced word)
+	 * @throws InvalidCryptarithmException
+	 *             when s isn't valid (e.g. a non-approved operator, a misplaced
+	 *             word)
 	 */
 	private BinaryOperator operationConstructor(String s) throws InvalidCryptarithmException {
 		BinaryOperator op = null;
@@ -122,86 +116,101 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * PARSES WORDS
+	 * Reads a string and constructs a general expression representing the word, in
+	 * which the letters in the word are variable expressions
 	 * 
 	 * @param word
 	 *            the word to parse
-	 * @return a NonVariableExpression representing the word
+	 * @return a GeneralExpression representing the word
 	 */
-	private GeneralExpression wordConstructor(String word) throws InvalidCryptarithmException{
-		GeneralExpression parsedLetter;
-		GeneralExpression parsedWord = null;
+	private BinaryExpression wordConstructor(String word) throws InvalidCryptarithmException {
+		BinaryExpression parsedLetter;
+		BinaryExpression parsedWord = null;
 
+		// used to calculate the magnitude of each letter
 		int iterator = word.length() - 1;
 
 		for (char c : word.toCharArray()) {
 			VariableExpression letter = null;
 			VariableExpression magnitude = new VariableExpression("magnitude");
 			magnitude.store(Math.pow(10, iterator--));
+			// if letter is contained in the list of letters in the cryptarithm, set letter
+			// equal to the corresponding list element
 			for (VariableExpression var : letters) {
-				if (var.name().equals(""+c)) {
+				if (var.name().equals("" + c)) {
 					letter = var;
+					//add the character to list of first letters in the cryptarithm, when appropriate
 					if (c == word.charAt(0)) {
 						firstLetters.add(letter);
 					}
 				}
 			}
+			// if letter isn't contained, create a new variable expression representing the letter
 			if (letter == null) {
 				letter = new VariableExpression("" + c);
 				letters.add(letter);
 				numberOfLetters++;
-				if(numberOfLetters>10) {
-					throw new InvalidCryptarithmException();
-				}
 				if (c == word.charAt(0)) {
 					firstLetters.add(letter);
 				}
+				if (numberOfLetters > 10) {
+					throw new InvalidCryptarithmException();
+				}
 			}
-			parsedLetter = new GeneralExpression(new Multiplication(), letter, magnitude);
+			// parses letter by multiplying it with the appropriate magnitude
+			parsedLetter = new BinaryExpression(new Multiplication(), letter, magnitude);
 
+			// initially set parsed word equal to the first letter, then add each new parsed
+			// letter to parsed word
 			if (parsedWord == null) {
 				parsedWord = parsedLetter;
 			} else {
-				parsedWord = new GeneralExpression(new Addition(), parsedWord, parsedLetter);
+				parsedWord = new BinaryExpression(new Addition(), parsedWord, parsedLetter);
 			}
 		}
 		return parsedWord;
 	}
-	
-	/*
-	 * 
-	 * /** Find solutions to the cryptarithm
+
+	/** Find solutions to the cryptarithm
 	 * 
 	 * @return a list of all possible solutions to the given cryptarithm. A solution
 	 * is a map that provides the value for each alphabet in the cryptarithm.
 	 */
-
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		List<Map<Character, Integer>> result = new ArrayList<Map<Character, Integer>>();
-		
+
 		Set<Integer[]> digitSubset = Cryptarithm.generateSubsets(letters.size());
 		for (Integer[] subset : digitSubset) {
 			Permutation<Integer> permutation = new Permutation<Integer>(subset);
 			Set<Integer[]> permutations = permutation.generateAllPermutations(permutation.getLength());
-			for(Integer[] onePerm : permutations) {
+			for (Integer[] onePerm : permutations) {
 				assign(onePerm);
 				if (checkSol()) {
 					result.add(generateMap(onePerm));
 				}
 			}
 		}
-		if(result.size()==0) {
+		if (result.size() == 0) {
 			throw new NoSolutionException();
 		}
 		return result;
 	}
-
+	
+	/** NOT SURE IF I INTERPRETED THIS CORRECTLY
+	 * 
+	 * @param arr
+	 */
 	private void assign(Integer[] arr) {
 		for (int i = 0; i < arr.length; i++) {
 			letters.get(i).store(arr[i]);
 		}
 	}
 
+	/**NOT SURE IF I INTERPRETED THIS CORRECTLY
+	 * 
+	 * @param values
+	 * @return
+	 */
 	private Map<Character, Integer> generateMap(Integer[] values) {
 		Map<Character, Integer> result = new LinkedHashMap<Character, Integer>();
 		for (int i = 0; i < values.length; i++) {
@@ -211,12 +220,14 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * Checks if a set of values for the different characters/variables is a valid solution to the cryptarithm
+	 * Checks if a set of values for the different characters/variables is a valid
+	 * solution to the cryptarithm
+	 * 
 	 * @return true if solution is valid; false otherwise
 	 */
 	private boolean checkSol() {
-		//first letters have to be non-zero and left hand side equal to right hand side
-		if(noZero(firstLetters) && lhs.eval()==rhs.eval()) {
+		// first letters have to be non-zero and left hand side equal to right hand side
+		if (noZero(firstLetters) && lhs.eval() == rhs.eval()) {
 			return true;
 		}
 		return false;
@@ -224,21 +235,25 @@ public class Cryptarithm {
 
 	/**
 	 * Checks if a list of variables contains any zeroes
-	 * @return false if the list contains one or more variables with the value zero; true otherwise
+	 * 
+	 * @return false if the list contains one or more variables with the value zero;
+	 *         true otherwise
 	 */
 	private boolean noZero(List<VariableExpression> words) {
-		for(VariableExpression var : words) {
-			if(var.eval()==0) {
+		for (VariableExpression var : words) {
+			if (var.eval() == 0)
 				return false;
-			}
 		}
 		return true;
-	}	
+	}
 
-	/** I"M NOT SURE IF INTERPRETED THIS CORRECTLY
-	 * Returns all the possible subsets of of size k
+	/**
+	 * I"M NOT SURE IF INTERPRETED THIS CORRECTLY Returns all the possible subsets
+	 * of size k
+	 * 
 	 * @param k
-	 * @return A set of integer arrays such that each array contains k
+	 *            size of the subset, must be <= 10
+	 * @return a set of integer arrays such that each array contains k
 	 */
 	private static Set<Integer[]> generateSubsets(int k) {
 		Set<Integer[]> result = new LinkedHashSet<Integer[]>();
