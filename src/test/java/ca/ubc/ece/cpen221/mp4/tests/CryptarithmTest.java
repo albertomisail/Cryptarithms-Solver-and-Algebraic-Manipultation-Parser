@@ -94,6 +94,13 @@ public class CryptarithmTest {
 		} catch (InvalidCryptarithmException e) {
 			invalid = true;
 		}
+		try {
+			String[] crypto7 = { "A", "=", "" };
+			Cryptarithm parsedCrypto7 = new Cryptarithm(crypto7);
+			invalid = false;
+		} catch (InvalidCryptarithmException e) {
+			invalid = true;
+		}
 		assertEquals(true, invalid);
 	}
 
