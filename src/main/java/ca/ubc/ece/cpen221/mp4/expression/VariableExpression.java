@@ -70,7 +70,7 @@ public class VariableExpression implements Expression {
 	@Override
 	/**
 	 * Compares another object with this variable for equality
-	 * @return true if both objects are variable expressions and have the same name
+	 * @return true if both objects are variable expressions with the same name
 	 */
 	public boolean equals(Object obj) {
 		if (this == obj) {

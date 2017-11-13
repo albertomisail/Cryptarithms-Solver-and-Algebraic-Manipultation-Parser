@@ -14,7 +14,6 @@ public class UnaryExpression implements Expression{
 		this.expLeft = operand;
 	}
 	
-
 	@Override
 	public double eval() {
 		return this.uniOperator.apply(this.expLeft.eval());

@@ -7,7 +7,7 @@ public class NewtonsMethod {
 	/**
 	 * Calculates approximately the roots of a function given a tolerance using Newton's method
 	 * @param function the function for which we want to calculate the zeros
-	 * @param x the variable for which the function is going to be differenciated
+	 * @param x the variable for which the function is going to be differentiated
 	 * @param approxZero a first guess of what the zero of the function is
 	 * @param tolerance the tolerance for which the zero of the function wants to be calculated
 	 * @return a value y such that |tolerance|>|f(y)|

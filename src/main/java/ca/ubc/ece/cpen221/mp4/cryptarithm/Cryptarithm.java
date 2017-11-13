@@ -107,8 +107,6 @@ public class Cryptarithm {
 		case "/":
 			op = new Division();
 			break;
-		case "=":
-			break;
 		default:
 			throw new InvalidCryptarithmException();
 		}
