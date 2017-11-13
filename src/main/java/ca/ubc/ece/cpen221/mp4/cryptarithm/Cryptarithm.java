@@ -248,7 +248,7 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * I"M NOT SURE IF INTERPRETED THIS CORRECTLY Returns all the possible subsets
+	 * I"M NOT SURE IF INTERPRETED THIS CORRECTLY -- CAN YOU ADD MORE COMMENTS?  Returns all the possible subsets
 	 * of size k
 	 * 
 	 * @param k
