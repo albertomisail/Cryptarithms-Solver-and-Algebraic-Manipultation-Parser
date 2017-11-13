@@ -36,6 +36,9 @@ public class Cryptarithm {
 	 *            where each element is a String that represents part of the
 	 *            cryptarithm
 	 * @throws InvalidCryptarithmException
+	 *             if the cryptarithm contains more than 10 letters or doesn't
+	 *             follow the specified format: word (operator word ...) = word
+	 *             (operator word ...)
 	 */
 	public Cryptarithm(String[] cryptarithm) throws InvalidCryptarithmException {
 		if (!Arrays.asList(cryptarithm).contains("=")) {
@@ -54,8 +57,8 @@ public class Cryptarithm {
 		for (i = 0; !cryptarithm[i].equals("="); i++) {
 			if (i % 2 == 0) {
 				word = wordConstructor(cryptarithm[i]);
-				//if no operation has been parsed yet, we are reading the first word
-				//otherwise, we should add the word to the existing expression
+				// if no operation has been parsed yet, we are reading the first word
+				// otherwise, we should add the word to the existing expression
 				if (op == null)
 					lhs = word;
 				else
@@ -64,7 +67,7 @@ public class Cryptarithm {
 				op = (operationConstructor(cryptarithm[i]));
 			}
 		}
-		//resets operator to null to parse right hand side
+		// resets operator to null to parse right hand side
 		op = null;
 		for (i = i + 1; i < cryptarithm.length; i++) {
 			if (i % 2 == 0) {
@@ -137,13 +140,15 @@ public class Cryptarithm {
 			for (VariableExpression var : letters) {
 				if (var.name().equals("" + c)) {
 					letter = var;
-					//add the character to list of first letters in the cryptarithm, when appropriate
+					// add the character to list of first letters in the cryptarithm, when
+					// appropriate
 					if (c == word.charAt(0)) {
 						firstLetters.add(letter);
 					}
 				}
 			}
-			// if letter isn't contained, create a new variable expression representing the letter
+			// if letter isn't contained, create a new variable expression representing the
+			// letter
 			if (letter == null) {
 				letter = new VariableExpression("" + c);
 				letters.add(letter);
@@ -169,10 +174,12 @@ public class Cryptarithm {
 		return parsedWord;
 	}
 
-	/** Find solutions to the cryptarithm
+	/**
+	 * Find solutions to the cryptarithm
 	 * 
 	 * @return a list of all possible solutions to the given cryptarithm. A solution
-	 * is a map that provides the value for each alphabet in the cryptarithm.
+	 *         is a map that provides the value for each alphabet in the
+	 *         cryptarithm.
 	 */
 	public List<Map<Character, Integer>> solve() throws NoSolutionException {
 		List<Map<Character, Integer>> result = new ArrayList<Map<Character, Integer>>();
@@ -193,10 +200,13 @@ public class Cryptarithm {
 		}
 		return result;
 	}
-	
-	/** NOT SURE IF I INTERPRETED THIS CORRECTLY
+
+	/**
+	 * Assign the values stored in arr to the values of the letters expression
 	 * 
 	 * @param arr
+	 *            the array with the values to be assigned. Requires: arr.length =
+	 *            letters.size()
 	 */
 	private void assign(Integer[] arr) {
 		for (int i = 0; i < arr.length; i++) {
@@ -204,10 +214,15 @@ public class Cryptarithm {
 		}
 	}
 
-	/**NOT SURE IF I INTERPRETED THIS CORRECTLY
+	/**
+	 * Generates a map from the character that represents a letter to a value that
+	 * gives a solution to the cryptarithm
 	 * 
 	 * @param values
-	 * @return
+	 *            the values for the letters that give a solution to teh
+	 *            cryptarithm. Requires values.length = letters.size()
+	 * @return a map from the character that represents a letter to a value that
+	 *         gives a solution to the cryptarithm
 	 */
 	private Map<Character, Integer> generateMap(Integer[] values) {
 		Map<Character, Integer> result = new LinkedHashMap<Character, Integer>();
@@ -246,12 +261,13 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * I"M NOT SURE IF INTERPRETED THIS CORRECTLY -- CAN YOU ADD MORE COMMENTS?  Returns all the possible subsets
-	 * of size k
+	 * Returns all the possible subsets of size k from the digits from 0 to 9
 	 * 
 	 * @param k
-	 *            size of the subset, must be <= 10
-	 * @return a set of integer arrays such that each array contains k
+	 *            size of the subset, requires k <= 10
+	 * @return a set of all arrays such that: all elements in the array are integers
+	 *         between 0 and 9 there is no repeated elements there is exactly k
+	 *         elements
 	 */
 	private static Set<Integer[]> generateSubsets(int k) {
 		Set<Integer[]> result = new LinkedHashSet<Integer[]>();
