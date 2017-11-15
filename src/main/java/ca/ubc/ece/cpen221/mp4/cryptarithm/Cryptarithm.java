@@ -20,7 +20,12 @@ import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
 import ca.ubc.ece.cpen221.mp4.operator.Subtraction;
 
 /**
- * Cryptarithm - a data type that represents a cryptarithm REP INVARIANT: ADT:
+ * Cryptarithm - a data type that represents a cryptarithm 
+ * REP INVARIANT: number of elements in letters is equal to numberOfLetters
+ * 					if this.checkSol() returns true, lhs.eval()==rhs.eval() and for every element x of firstLetters,
+ * 					x.eval()!=0
+ * AF: represents an equality between an expression (lhs) and another expression (rhs) 
+ * 		for which each letter in either lhs or rhs represents a different value
  */
 public class Cryptarithm {
 	private BinaryExpression lhs;
