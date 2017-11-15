@@ -15,6 +15,7 @@ public class CryptarithmTest {
 	@Test
 	public void test0() throws InvalidCryptarithmException, NoSolutionException {
 		String[] crypto1 = { "SEND", "+", "MORE", "=", "MONEY" };
+		
 		Cryptarithm parsedCrypto1 = new Cryptarithm(crypto1);
 		List<Map<Character, Integer>> sol1 = parsedCrypto1.solve();
 		System.out.println(sol1);
