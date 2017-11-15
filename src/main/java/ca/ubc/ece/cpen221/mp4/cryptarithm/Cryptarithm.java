@@ -117,12 +117,12 @@ public class Cryptarithm {
 	}
 
 	/**
-	 * Reads a string and constructs a general expression representing the word, in
+	 * Reads a string and constructs a binary expression representing the word, in
 	 * which the letters in the word are variable expressions
 	 * 
 	 * @param word
 	 *            the word to parse
-	 * @return a GeneralExpression representing the word
+	 * @return a BinaryExpression representing the word
 	 */
 	private BinaryExpression wordConstructor(String word) throws InvalidCryptarithmException {
 		BinaryExpression parsedLetter;

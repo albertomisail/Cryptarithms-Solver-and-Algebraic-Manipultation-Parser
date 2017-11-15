@@ -12,10 +12,10 @@ public class DerivativeTest {
 	public void test0() {
 		VariableExpression x = new VariableExpression("x");
 		x.store(4);
-		GeneralExpression y = new GeneralExpression(2);
+		Expression y = new NumberExpression(2);
 		
-		Expression e1 = new GeneralExpression(new Addition(), x, y);
-		Expression e2 = new GeneralExpression(new Multiplication(), x, x);
+		Expression e1 = new BinaryExpression(new Addition(), x, y);
+		Expression e2 = new BinaryExpression(new Multiplication(), x, x);
 		DerivativeExpression d1 = new DerivativeExpression(e1, x);
 		DerivativeExpression d2 = new DerivativeExpression(e2, x);
 		assertEquals(0,(int)Math.abs(d1.eval()-1));

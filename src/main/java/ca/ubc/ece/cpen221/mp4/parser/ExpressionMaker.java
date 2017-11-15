@@ -1,7 +1,10 @@
 package ca.ubc.ece.cpen221.mp4.parser;
 
+import ca.ubc.ece.cpen221.mp4.expression.BinaryExpression;
+
 import ca.ubc.ece.cpen221.mp4.expression.Expression;
-import ca.ubc.ece.cpen221.mp4.expression.GeneralExpression;
+import ca.ubc.ece.cpen221.mp4.expression.NumberExpression;
+import ca.ubc.ece.cpen221.mp4.expression.UnaryExpression;
 import ca.ubc.ece.cpen221.mp4.expression.VariableExpression;
 import ca.ubc.ece.cpen221.mp4.operator.BinaryOperator;
 import ca.ubc.ece.cpen221.mp4.operator.UnaryOperator;
@@ -26,7 +29,7 @@ public class ExpressionMaker {
 	 */
 	public Expression createBinaryOperationExpression(BinaryOperator operator, Expression operand1,
 			Expression operand2) {
-		Expression result = new GeneralExpression(operator, operand1, operand2);
+		Expression result = new BinaryExpression(operator, operand1, operand2);
 		return result;		
 	}
 
@@ -40,7 +43,7 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createUnaryOperationExpression(UnaryOperator operator, Expression operand) {
-		Expression result = new GeneralExpression(operator, operand);
+		Expression result = new UnaryExpression(operator, operand);
 		return result;
 	}
 
@@ -52,7 +55,7 @@ public class ExpressionMaker {
 	 * @return the expression
 	 */
 	public Expression createNumberExpression(double value) {
-		Expression result = new GeneralExpression(value);
+		Expression result = new NumberExpression(value);
 		return result;
 	}
 	

@@ -16,8 +16,8 @@ public class SimpleCalculatorTest {
 
 	@Test
 	public void test0() {
-		Expression e = new GeneralExpression(-5);
-		Expression e2 = new GeneralExpression(10);
+		Expression e = new NumberExpression(-5);
+		Expression e2 = new NumberExpression(10);
 		UnaryOperator abs = new AbsoluteValue();
 		UnaryOperator neg = new Negation();
 		BinaryOperator sum = new Addition();
@@ -25,13 +25,13 @@ public class SimpleCalculatorTest {
 		BinaryOperator times = new Multiplication();
 		BinaryOperator div = new Division();
 		BinaryOperator exp = new Exponentiation();
-		Expression a = new GeneralExpression(abs,e);
-		Expression b = new GeneralExpression(neg, e2);
-		Expression c = new GeneralExpression(sum, e, e2);
-		Expression d = new GeneralExpression(sub, e, e2);
-		Expression f = new GeneralExpression(times, e, e2);
-		Expression g = new GeneralExpression(div, e2, e);
-		Expression h = new GeneralExpression(exp, e2, a);
+		Expression a = new UnaryExpression(abs,e);
+		Expression b = new UnaryExpression(neg, e2);
+		Expression c = new BinaryExpression(sum, e, e2);
+		Expression d = new BinaryExpression(sub, e, e2);
+		Expression f = new BinaryExpression(times, e, e2);
+		Expression g = new BinaryExpression(div, e2, e);
+		Expression h = new BinaryExpression(exp, e2, a);
 		assertEquals("10.0",e2.toString());
 		assertEquals(5,(int)a.eval());
 		assertEquals(-10,(int)b.eval());

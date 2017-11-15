@@ -1,8 +1,5 @@
 package ca.ubc.ece.cpen221.mp4.expression;
 
-import ca.ubc.ece.cpen221.mp4.operator.Addition;
-import ca.ubc.ece.cpen221.mp4.operator.Multiplication;
-
 public class NewtonsMethod {
 	/**
 	 * Calculates approximately the roots of a function given a tolerance using Newton's method
